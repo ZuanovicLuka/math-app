@@ -10,10 +10,10 @@ export default function NotFound() {
           "linear-gradient(to right, #0a42e0 2%, #3661da 10%, #3b82f6 30%, #60a5fa 40%, #93c5fd 50%, #bfdbfe 60%, #dbeafe 70%, #ffffff 90%)",
       }}
     >
-      <h1 className="text-4xl font-bold text-textColor">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-textColor">
         404 - Page Not Found
       </h1>
-      <p className="text-lg text-gray-600 mt-2 font-semibold">
+      <p className="text-base md:text-lg text-gray-600 mt-2 font-semibold">
         Oops! The page you are looking for does not exist.
       </p>
       <a
