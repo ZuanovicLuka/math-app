@@ -188,8 +188,9 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col items-center gap-4 mt-6 max-w-xs w-full relative">
-          <div className="flex justify-start w-full">
+          <div className="flex justify-start w-full items-center gap-2">
             <CircleWithContent>📚</CircleWithContent>
+            <span className="text-textColor font-bold">Sortirane lekcije</span>
           </div>
 
           {/* Prva linija */}
@@ -212,7 +213,8 @@ export default function Home() {
             />
           </svg>
 
-          <div className="flex justify-end w-full">
+          <div className="flex justify-end w-full items-center gap-2">
+            <span className="text-textColor font-bold">Dnevni kvizovi</span>
             <CircleWithContent>📅</CircleWithContent>
           </div>
 
@@ -236,8 +238,9 @@ export default function Home() {
             />
           </svg>
 
-          <div className="flex justify-start w-full">
+          <div className="flex justify-start w-full items-center gap-2">
             <CircleWithContent>🏆</CircleWithContent>
+            <span className="text-textColor font-bold">Takmičenja</span>
           </div>
 
           {/* Treca linija */}
@@ -260,7 +263,10 @@ export default function Home() {
             />
           </svg>
 
-          <div className="flex justify-end w-full">
+          <div className="flex justify-end w-full items-center gap-2">
+            <span className="text-textColor font-bold">
+              Rangiranje korisnika
+            </span>
             <CircleWithContent>
               <GiPodium className="text-gray-700" />
             </CircleWithContent>
@@ -285,10 +291,13 @@ export default function Home() {
               strokeDasharray="5,5"
             />
           </svg>
-          <div className="flex justify-start w-full">
+          <div className="flex justify-start w-full items-center gap-2">
             <CircleWithContent>
               <TiTickOutline className="text-green-700" />
             </CircleWithContent>
+            <span className="text-textColor font-bold">
+              Praćenje vlastitog napretka
+            </span>
           </div>
         </div>
       </motion.div>
