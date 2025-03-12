@@ -4,7 +4,7 @@ import Logo from "./components/Logo";
 import CircleWithContent from "./components/CircleWithContent";
 import { GiPodium } from "react-icons/gi";
 import { TiTickOutline } from "react-icons/ti";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -15,6 +15,7 @@ export default function Home() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [serverErrorMessage, setServerErrorMessage] = useState("");
 
   const typingRef = useRef(null);
   const typingRefAbout = useRef(null);
@@ -31,14 +32,12 @@ export default function Home() {
     }
   }, []);
 
-  const handleLogin = () => {
-    if (username && password) {
-      localStorage.setItem("token", "dummy_token");
-      router.push("/home");
-    } else {
-      alert("Molimo unesite korisničko ime i lozinku");
-    }
-  };
+  // ovu funkciju jos treba zavrsiti (radi login)
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    console.log(username);
+    console.log(password);
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -54,32 +53,56 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex items-center justify-center text-center">
-          <div className="bg-white p-8 rounded-2xl shadow-xl w-96">
+          <div className="bg-white p-8 rounded-2xl shadow-gray-900 shadow-2xl w-96">
             <h2 className="text-3xl font-bold mb-5">Prijava</h2>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Korisničko ime"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="password"
-                placeholder="Lozinka"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <button
-              className="bg-blue-500 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition-colors"
-              onClick={handleLogin}
-            >
-              Prijavi se
-            </button>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Korisničko ime"
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    serverErrorMessage
+                      ? "ring-2 ring-red-500"
+                      : "focus:ring-blue-500"
+                  }`}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  maxLength={30}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  placeholder="Lozinka"
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    serverErrorMessage
+                      ? "ring-2 ring-red-500"
+                      : "focus:ring-blue-500"
+                  }`}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  maxLength={20}
+                  required
+                />
+              </div>
+
+              {serverErrorMessage && (
+                <div
+                  style={{ color: "red" }}
+                  className="lg:text-[15px] mb-4 font-semibold"
+                >
+                  {serverErrorMessage}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="bg-blue-500 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Prijavi se
+              </button>
+            </form>
             <div className="mt-4 flex justify-center items-center text-gray-600">
               <p className="mr-2">Još uvijek nemate račun?</p>
               <button
