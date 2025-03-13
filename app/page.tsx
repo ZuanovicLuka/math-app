@@ -135,7 +135,7 @@ export default function Home() {
             strokeLinecap="round"
           />
         </svg>
-        <h2 className="text-4xl font-bold text-textColor mt-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-textColor mt-4">
           {isTypingVisible && (
             <Typewriter
               words={["Imaš problema s učenjem matematike?"]}
@@ -145,7 +145,7 @@ export default function Home() {
             />
           )}
         </h2>
-        <p className="text-lg max-w-xl mx-auto text-gray-700 mt-3 mb-6 text-justify">
+        <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-textColor mt-3 mb-6 text-justify px-4">
           Ako tvoje učenje matematike izgleda ovako – dosadno, zbunjujuće i bez
           prave motivacije – onda imamo rješenje za tebe! Naša platforma ti
           pomaže kroz interaktivne lekcije, zabavne zadatke i personalizirano
@@ -155,12 +155,13 @@ export default function Home() {
           omogućuje ti da uvijek znaš koliko si daleko stigao. Pridruži se i
           otkrij kako učenje može biti lako i inspirativno!
         </p>
+
         <Image
           src="/images/kid-struggle.jpg"
           alt="Dijete koje uči matematiku"
           width={500}
           height={300}
-          className="mx-auto rounded-lg shadow-md"
+          className="mx-auto rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg h-auto"
         />
       </motion.div>
 
@@ -185,7 +186,7 @@ export default function Home() {
           />
         </svg>
 
-        <h2 className="text-4xl font-bold mb-6 mt-4">
+        <h2 className="font-bold mb-6 mt-4 text-2xl md:text-3xl lg:text-4xl">
           {isTypingVisibleAbout && (
             <Typewriter
               words={["O našoj aplikaciji"]}
@@ -196,7 +197,7 @@ export default function Home() {
           )}
         </h2>
 
-        <p className="text-lg max-w-2xl mx-auto text-gray-700 mb-6 text-justify">
+        <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto text-textColor mt-3 mb-6 text-justify px-4">
           Naša aplikacija je zabavan i interaktivan alat koji omogućava
           učenicima osnovnih i srednjih škola da uče matematiku na potpuno nov i
           uzbudljiv način! Kroz <b>sortirane lekcije</b>,{" "}
@@ -213,7 +214,9 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4 mt-6 max-w-xs w-full relative">
           <div className="flex justify-start w-full items-center gap-2">
             <CircleWithContent>📚</CircleWithContent>
-            <span className="text-textColor font-bold">Sortirane lekcije</span>
+            <span className="text-textColor font-bold text-sm md:text-base lg:text-lg">
+              Sortirane lekcije
+            </span>
           </div>
 
           {/* Prva linija */}
@@ -237,7 +240,9 @@ export default function Home() {
           </svg>
 
           <div className="flex justify-end w-full items-center gap-2">
-            <span className="text-textColor font-bold">Dnevni kvizovi</span>
+            <span className="text-textColor font-bold text-sm md:text-base lg:text-lg">
+              Dnevni kvizovi
+            </span>
             <CircleWithContent>📅</CircleWithContent>
           </div>
 
@@ -263,7 +268,9 @@ export default function Home() {
 
           <div className="flex justify-start w-full items-center gap-2">
             <CircleWithContent>🏆</CircleWithContent>
-            <span className="text-textColor font-bold">Takmičenja</span>
+            <span className="text-textColor font-bold text-sm md:text-base lg:text-lg">
+              Takmičenja
+            </span>
           </div>
 
           {/* Treca linija */}
@@ -287,7 +294,7 @@ export default function Home() {
           </svg>
 
           <div className="flex justify-end w-full items-center gap-2">
-            <span className="text-textColor font-bold">
+            <span className="text-textColor font-bold text-sm md:text-base lg:text-lg">
               Rangiranje korisnika
             </span>
             <CircleWithContent>
@@ -318,8 +325,8 @@ export default function Home() {
             <CircleWithContent>
               <TiTickOutline className="text-green-700" />
             </CircleWithContent>
-            <span className="text-textColor font-bold">
-              Praćenje vlastitog napretka
+            <span className="text-textColor font-bold text-sm md:text-base lg:text-lg">
+              Praćenje napretka
             </span>
           </div>
         </div>
@@ -345,7 +352,7 @@ export default function Home() {
             strokeLinecap="round"
           />
         </svg>
-        <h2 className="text-4xl font-bold mb-6 mt-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 mt-4">
           {isTypingVisibleContact && (
             <Typewriter
               words={["Kontaktirajte nas"]}
@@ -355,8 +362,8 @@ export default function Home() {
             />
           )}
         </h2>
-        <p className="text-lg">Imate pitanja? Javite nam se na:</p>
-        <p className="text-lg font-semibold">
+        <p className="text-base md:text-lg">Imate pitanja? Javite nam se na:</p>
+        <p className="text-base md:text-lg font-semibold">
           <a href="mailto:official.mathplusplus@gmail.com">
             official.mathplusplus@gmail.com
           </a>
