@@ -42,19 +42,19 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div
-        className="w-full flex min-h-screen"
+        className="w-full md:flex min-h-screen"
         style={{
           background:
             "linear-gradient(to right, #0a42e0 2%, #3661da 10%, #3b82f6 30%, #60a5fa 40%, #93c5fd 50%, #bfdbfe 60%, #dbeafe 70%, #ffffff 90%)",
         }}
       >
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center mt-4 md:mt-0">
           <Logo />
         </div>
 
-        <div className="flex-1 flex items-center justify-center text-center">
-          <div className="bg-white p-8 rounded-2xl shadow-gray-900 shadow-2xl w-96">
-            <h2 className="text-3xl font-bold mb-5">Prijava</h2>
+        <div className="flex-1 flex items-center justify-center text-center mt-14 sm:mt-10 md:mt-0">
+          <div className="bg-white p-8 rounded-2xl shadow-gray-900 shadow-2xl lg:w-96">
+            <h2 className="text-2xl md:text-3xl font-bold mb-5">Prijava</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <input

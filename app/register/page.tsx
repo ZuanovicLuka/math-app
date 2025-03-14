@@ -31,7 +31,7 @@ export default function Register() {
           "linear-gradient(to right, #0a42e0 2%, #3661da 10%, #3b82f6 30%, #60a5fa 40%, #93c5fd 50%, #bfdbfe 60%, #dbeafe 70%, #ffffff 90%)",
       }}
     >
-      <div className="absolute top-4 left-4 w-[8rem]">
+      <div className="absolute top-4 left-4 w-[9rem]">
         <img src="/images/logo.png" className="w-full" />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-gray-900 shadow-2xl md:w-3/5 lg:w-2/5 mt-5">
