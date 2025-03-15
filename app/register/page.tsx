@@ -2,24 +2,58 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+
+const signUpSchema = z.object({
+  first_name: z
+    .string()
+    .min(2, "Ime mora imati barem 2 znaka!")
+    .regex(/^[A-ZČĆŠĐŽ][a-zA-ZČĆŠĐŽčćšđž]*$/, "Neispravan format imena!"),
+  last_name: z
+    .string()
+    .min(2, "Prezime mora imati barem 2 znaka!")
+    .regex(/^[A-ZŠČĆĐŽ][a-zA-ZČĆŠĐŽčćšđž]*$/, "Neispravan format prezimena!"),
+  username: z
+    .string()
+    .min(4, "Korisničko ime mora imati barem 4 znaka!")
+    .regex(/^[a-zA-Z][a-zA-Z0-9._]*$/, "Neispravan format korisničkog imena!"),
+  email: z.string().email("Neispravan email format!"),
+  password: z.string().min(6, "Lozinka mora imati barem 6 znakova!"),
+});
 
 export default function Register() {
   const router = useRouter();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [schoolLevel, setSchoolLevel] = useState("");
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: "",
+    schoolLevel: "",
+  });
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const [errors, setErrors] = useState<any>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (firstName && lastName && username && email && password && schoolLevel) {
-      alert("Registracija uspješna!");
-      router.push("/login");
-    } else {
-      alert("Molimo unesite sve podatke");
+
+    try {
+      signUpSchema.parse(formData);
+      setErrors({});
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const formattedErrors = error.errors.reduce((acc: any, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {});
+        setErrors(formattedErrors);
+      }
     }
   };
 
@@ -34,57 +68,55 @@ export default function Register() {
       <div className="absolute top-4 left-4 w-[9rem]">
         <img src="/images/logo.png" className="w-full" />
       </div>
-      <div className="bg-white p-6 rounded-2xl shadow-gray-900 shadow-2xl md:w-3/5 lg:w-2/5 mt-5">
+      <div className="bg-white p-6 rounded-2xl shadow-gray-900 shadow-2xl w-11/12 sm:w-4/5 md:w-3/5 lg:w-1/2 mt-20">
         <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-textColor">
           Registracija
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <input
-              type="text"
-              placeholder="Ime"
-              className="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              maxLength={20}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Prezime"
-              className="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              maxLength={20}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Korisničko ime"
-              className="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              maxLength={30}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Email"
-              className="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              maxLength={50}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Lozinka"
-              className="p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              maxLength={20}
-              required
-            />
+            {["first_name", "last_name", "username", "email", "password"].map(
+              (field) => (
+                <div key={field} className="col-span-1">
+                  <input
+                    type={field === "password" ? "password" : "text"}
+                    name={field}
+                    value={formData[field as keyof typeof formData]}
+                    onChange={handleChange}
+                    placeholder={
+                      field === "first_name"
+                        ? "Ime"
+                        : field === "last_name"
+                          ? "Prezime"
+                          : field === "username"
+                            ? "Korisničko ime"
+                            : field === "email"
+                              ? "Email"
+                              : "Lozinka"
+                    }
+                    title={
+                      field === "first_name"
+                        ? "Ime mora imati barem 2 znaka i početi velikim slovom!"
+                        : field === "last_name"
+                          ? "Prezime mora imati barem 2 znaka i početi velikim slovom!"
+                          : field === "username"
+                            ? "Korisničko ime mora početi slovom i imati barem 4 znaka!"
+                            : field === "email"
+                              ? "Unesite ispravan email format (npr. ime@domena.com)"
+                              : "Lozinka mora imati barem 6 znakova!"
+                    }
+                    className={`p-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors[field] ? "ring-2 ring-red-500" : "focus:ring-blue-500"} text-sm md:text-base`}
+                    maxLength={field === "email" ? 50 : 20}
+                    required
+                  />
+
+                  {errors[field] && (
+                    <div className="text-red-700 text-xs font-semibold mt-1">
+                      {errors[field]}
+                    </div>
+                  )}
+                </div>
+              )
+            )}
           </div>
           <div className="mb-4 text-center">
             <p className="text-base md:text-lg text-textColor">
@@ -92,28 +124,23 @@ export default function Register() {
             </p>
           </div>
           <div className="flex justify-center gap-2 mb-4">
-            <label className="text-sm md:text-base hover:cursor-pointer has-[:checked]:bg-[#1f3088] has-[:checked]:text-gray-100 bg-[#ffff] border-1 border-gray-400 rounded-md w-50 h-9 flex justify-center items-center text-textColor">
-              <input
-                type="radio"
-                className="opacity-0 absolute "
-                onChange={() => setSchoolLevel("Osnovna škola")}
-                name="schoolLevel"
-                checked={schoolLevel === "Osnovna škola"}
-                required
-              />
-              Osnovna škola
-            </label>
-            <label className="text-sm md:text-base hover:cursor-pointer has-[:checked]:bg-[#1f3088] has-[:checked]:text-gray-100 bg-[#ffff] border-1 border-gray-400 rounded-md w-50 h-9 flex justify-center items-center text-textColor">
-              <input
-                type="radio"
-                className="opacity-0 absolute"
-                onChange={() => setSchoolLevel("Srednja škola")}
-                name="schoolLevel"
-                checked={schoolLevel === "Srednja škola"}
-                required
-              />
-              Srednja škola
-            </label>
+            {["Osnovna škola", "Srednja škola"].map((level) => (
+              <label
+                key={level}
+                className="text-sm md:text-base hover:cursor-pointer has-[:checked]:bg-[#1f3088] has-[:checked]:text-gray-100 bg-[#ffff] border-1 border-gray-400 rounded-md w-50 h-9 flex justify-center items-center text-textColor"
+              >
+                <input
+                  type="radio"
+                  className="opacity-0 absolute"
+                  onChange={handleChange}
+                  name="schoolLevel"
+                  value={level}
+                  checked={formData.schoolLevel === level}
+                  required
+                />
+                {level}
+              </label>
+            ))}
           </div>
           <button
             type="submit"

@@ -67,7 +67,7 @@ export default function Home() {
                   }`}
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  maxLength={30}
+                  maxLength={20}
                   required
                 />
               </div>
