@@ -46,6 +46,36 @@ export default function Register() {
     try {
       signUpSchema.parse(formData);
       setErrors({});
+
+      // Priprema podataka za backend
+      const registrationData = {
+        firstName: formData.first_name,
+        lastName: formData.last_name,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        schoolLevel: formData.schoolLevel,
+      };
+
+      // Slanje podataka na backend
+      const response = await fetch("http://localhost:8080/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registrationData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("aaa bbbb " + errorData);
+      } else {
+        const data = await response.json();
+        console.log(data);
+      }
+
+      // Uspješna registracija - preusmjeravanje korisnika
+      router.push("/home");
     } catch (error) {
       if (error instanceof z.ZodError) {
         const formattedErrors = error.errors.reduce((acc: any, curr) => {
