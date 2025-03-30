@@ -5,6 +5,8 @@ import math.backend.model.User;
 import math.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -17,12 +19,18 @@ public class UserService {
     }
 
     public Long registerUser(UserRegistrationDto registrationDto) {
+        Map<String, String> errors = new HashMap<>();
+
         if (userRepository.existsByUsername(registrationDto.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            errors.put("usernameError", "Korisničko ime je zauzeto!");
         }
 
         if (userRepository.existsByEmail(registrationDto.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            errors.put("emailError", "Email je zauzet!");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new RegistrationException(errors);
         }
 
         // ako nema problema onda se kreira novi user, jedino se password hash-ira prije stavljanja u bazu
@@ -39,5 +47,19 @@ public class UserService {
 
         // vracamo id user-a po kojem ce se raditi jwt token
         return savedUser.getUserId();
+    }
+
+    // exception za registraciju
+    public static class RegistrationException extends RuntimeException {
+        private final Map<String, String> errors;
+
+        public RegistrationException(Map<String, String> errors) {
+            super("Registration failed");
+            this.errors = errors;
+        }
+
+        public Map<String, String> getErrors() {
+            return errors;
+        }
     }
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { apiCall } from "~/api";
 
 const signUpSchema = z.object({
   first_name: z
@@ -57,8 +58,8 @@ export default function Register() {
         schoolLevel: formData.schoolLevel,
       };
 
-      // Slanje podataka na backend
-      const response = await fetch("http://localhost:8080/api/users/register", {
+      // Slanje podataka na backend koristeći apiCall
+      const [data, status] = await apiCall("/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,16 +67,26 @@ export default function Register() {
         body: JSON.stringify(registrationData),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("aaa bbbb " + errorData);
-      } else {
-        const data = await response.json();
-        console.log(data);
-      }
+      if (status >= 400) {
+        // ako je doslo do greske (username ili email postoje onda to ovdje obradimo)
+        if (data.errors) {
+          const backendErrors: any = {};
 
-      // Uspješna registracija - preusmjeravanje korisnika
-      router.push("/home");
+          if (data.errors.usernameError) {
+            backendErrors.username = data.errors.usernameError;
+          }
+
+          if (data.errors.emailError) {
+            backendErrors.email = data.errors.emailError;
+          }
+
+          setErrors(backendErrors);
+        }
+      } else {
+        console.log("Uspješna registracija:", data);
+        localStorage.setItem("token", data.token);
+        router.push("/home");
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const formattedErrors = error.errors.reduce((acc: any, curr) => {
@@ -83,6 +94,8 @@ export default function Register() {
           return acc;
         }, {});
         setErrors(formattedErrors);
+      } else {
+        console.error("Došlo je do greške:", error);
       }
     }
   };

@@ -33,6 +33,12 @@ public class UserController {
                     "message", "User registered successfully",
                     "token", token
             ));
+        } catch (UserService.RegistrationException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", "Registration failed",
+                    "errors", e.getErrors()
+            ));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of(
                     "status", "error",
