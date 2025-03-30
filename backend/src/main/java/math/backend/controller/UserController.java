@@ -1,5 +1,7 @@
 package math.backend.controller;
 
+import math.backend.dto.UserLoginDto;
+import math.backend.dto.UserProfileDto;
 import math.backend.dto.UserRegistrationDto;
 import math.backend.service.UserService;
 import math.backend.config.JwtService;
@@ -43,6 +45,65 @@ public class UserController {
             return ResponseEntity.badRequest().body(Map.of(
                     "status", "error",
                     "message", e.getMessage()
+            ));
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDto) {
+        try {
+            // Authenticate user and get their ID
+            Long userId = userService.authenticateUser(loginDto.getUsername(), loginDto.getPassword());
+
+            // nakon toga generiramo jwt token sa tim id-em
+            String token = jwtService.generateToken(userId.toString());
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "message", "Login successful",
+                    "token", token
+            ));
+        } catch (UserService.AuthenticationException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "error", "Korisničko ime ili lozinka nisu ispravni!"
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String authHeader) {
+        try {
+            // provjera tokena
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body(Map.of(
+                        "status", "error",
+                        "message", "Nedostaje autorizacijski token!"
+                ));
+            }
+
+            // ako token postoji izvadimo ga
+            String token = authHeader.substring(7);
+
+            // uzimamo id iz tokena
+            String userId = jwtService.extractUserId(token);
+
+            // i onda prema tom Id-u (pk) dohvatimo sve podatke o user-u
+            UserProfileDto userProfile = userService.getUserProfile(Long.parseLong(userId));
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "user", userProfile
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "status", "error",
+                    "message", "Nevažeći token ili korisnik nije pronađen!"
             ));
         }
     }

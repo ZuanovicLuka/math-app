@@ -29,8 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
 
-        // preskoci filter za /api/users/register i OPTIONS zahtjeve
+        // preskoci filter za /api/users/register, /api/users/login i OPTIONS zahtjeve
         if (request.getServletPath().contains("/api/users/register") ||
+                request.getServletPath().contains("/api/users/login") ||
                 request.getMethod().equals("OPTIONS")) {
             filterChain.doFilter(request, response);
             return;

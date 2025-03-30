@@ -1,5 +1,6 @@
 package math.backend.service;
 
+import math.backend.dto.UserProfileDto;
 import math.backend.dto.UserRegistrationDto;
 import math.backend.model.User;
 import math.backend.repository.UserRepository;
@@ -61,5 +62,41 @@ public class UserService {
         public Map<String, String> getErrors() {
             return errors;
         }
+    }
+
+    public Long authenticateUser(String username, String password) {
+        // prvo dohvatimo user-a iz baze po tom username-u
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AuthenticationException("Invalid credentials"));
+
+        // i onda provjerimo je li password koji je poslan isti kao u bazi
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new AuthenticationException("Invalid credentials");
+        }
+
+        // ako je username postojeci i poslan je dobar password za njega vracamo njegov id (pk)
+        return user.getUserId();
+    }
+
+    public static class AuthenticationException extends RuntimeException {
+        public AuthenticationException(String message) {
+            super(message);
+        }
+    }
+
+    public UserProfileDto getUserProfile(Long userId) {
+        // iz baze dohvatimo User-a po id-u, ako ga nema baca error
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen!"));
+
+        UserProfileDto profileDto = new UserProfileDto();
+        profileDto.setUserId(user.getUserId());
+        profileDto.setFirstName(user.getFirstName());
+        profileDto.setLastName(user.getLastName());
+        profileDto.setSchoolLevel(user.getSchoolLevel());
+        profileDto.setUsername(user.getUsername());
+        profileDto.setEmail(user.getEmail());
+
+        return profileDto;
     }
 }

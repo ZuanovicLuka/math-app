@@ -4,12 +4,13 @@ import Logo from "./components/Logo";
 import CircleWithContent from "./components/CircleWithContent";
 import { GiPodium } from "react-icons/gi";
 import { TiTickOutline } from "react-icons/ti";
-import { useEffect, useState, useRef, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
+import { redirect, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Typewriter } from "react-simple-typewriter";
 import { useInView } from "framer-motion";
+import { apiCall } from "~/api";
 
 export default function Home() {
   const router = useRouter();
@@ -28,16 +29,39 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/home");
+      redirect("/home");
     }
   }, []);
 
-  // ovu funkciju jos treba zavrsiti (radi login)
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    console.log(username);
-    console.log(password);
-    throw new Error("Function not implemented.");
-  }
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    setServerErrorMessage("");
+
+    try {
+      const [data, status] = await apiCall("/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      if (status >= 400) {
+        if (data.error) {
+          setServerErrorMessage(data.error);
+        }
+      } else {
+        localStorage.setItem("token", data.token);
+        router.push("/home");
+      }
+    } catch (error) {
+      setServerErrorMessage("Greška prilikom prijave!");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -90,7 +114,7 @@ export default function Home() {
               {serverErrorMessage && (
                 <div
                   style={{ color: "red" }}
-                  className="lg:text-[15px] mb-4 font-semibold"
+                  className="text-[15px] lg:text-[16px] mb-4 font-semibold"
                 >
                   {serverErrorMessage}
                 </div>

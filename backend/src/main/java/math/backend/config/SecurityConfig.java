@@ -25,7 +25,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF nije potreban za JWT
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll() // Dozvoli registraciju
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll() // Dozvoli registraciju bez jwt
+                        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // Dozvoli login bez jwt
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // CORS preflight
                         .anyRequest().authenticated() // Sve ostalo zahtijeva JWT autentifikaciju
                 )
