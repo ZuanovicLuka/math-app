@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Lections() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <p className="text-2xl font-bold mb-6">Uspio si doci na home...</p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+      <p className="text-2xl font-bold mb-6">Lections...</p>
       <button
         onClick={() => {
           router.push("/profile");

@@ -85,7 +85,7 @@ export default function Register() {
       } else {
         console.log("Uspješna registracija:", data);
         localStorage.setItem("token", data.token);
-        router.push("/home");
+        router.push("/lections");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {

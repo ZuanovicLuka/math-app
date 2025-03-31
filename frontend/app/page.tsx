@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      redirect("/home");
+      router.push("/lections");
     }
   }, []);
 
@@ -56,7 +56,7 @@ export default function Home() {
         }
       } else {
         localStorage.setItem("token", data.token);
-        router.push("/home");
+        router.push("/lections");
       }
     } catch (error) {
       setServerErrorMessage("Greška prilikom prijave!");
