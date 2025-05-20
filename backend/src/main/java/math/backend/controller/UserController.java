@@ -3,11 +3,15 @@ package math.backend.controller;
 import math.backend.dto.UserLoginDto;
 import math.backend.dto.UserProfileDto;
 import math.backend.dto.UserRegistrationDto;
+import math.backend.dto.UserUpdateDto;
 import math.backend.service.UserService;
 import math.backend.config.JwtService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Map;
 
 @RestController
@@ -70,6 +74,74 @@ public class UserController {
             ));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    @PostMapping(value = "/update-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProfilePicture(@RequestHeader("Authorization") String authHeader, @RequestPart(value = "file", required = false) MultipartFile file) {
+        try {
+            // Provjera tokena
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body(Map.of(
+                        "status", "error",
+                        "message", "Nedostaje autorizacijski token!"
+                ));
+            }
+
+            String token = authHeader.substring(7);
+            String userId = jwtService.extractUserId(token);
+
+            userService.updateProfilePicture(Long.parseLong(userId), file);
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "message", "Profilna slika uspješno ažurirana!"
+            ));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(Map.of(
+                    "status", "error",
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    @PatchMapping("/update-profile")
+    public ResponseEntity<?> updateUserProfile(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody @Valid UserUpdateDto updateDto) {
+        try {
+            // Provjera tokena
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body(Map.of(
+                        "status", "error",
+                        "message", "Nedostaje autorizacijski token!"
+                ));
+            }
+
+            String token = authHeader.substring(7);
+            String userId = jwtService.extractUserId(token);
+
+            // Ažuriranje podataka
+            UserProfileDto updatedUser = userService.updateUserProfile(Long.parseLong(userId), updateDto);
+
+            return ResponseEntity.ok(Map.of(
+                    "status", "success",
+                    "message", "Profil uspješno ažuriran",
+                    "user", updatedUser
+            ));
+
+        } catch (UserService.UpdateException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", "Ažuriranje profila nije uspjelo",
+                    "errors", e.getErrors()
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(Map.of(
                     "status", "error",
                     "message", e.getMessage()
             ));

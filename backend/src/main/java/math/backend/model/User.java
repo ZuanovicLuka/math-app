@@ -6,7 +6,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "\"user\"")
 public class User {
-
     // sa Id oznacavamo da je to pk, IDENTITY = autoincrement po pk
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,19 +32,23 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+    @Column(name = "profile_picture") // moze biti NULL
+    private String profilePicture;
+
     // defaultni konstruktor (required by JPA)
     public User() {
     }
 
     // konstruktor sa svim poljima
     public User(String firstName, String lastName, String schoolLevel,
-                String username, String email, String passwordHash) {
+                String username, String email, String passwordHash, String profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.schoolLevel = schoolLevel;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.profilePicture = profilePicture;
     }
 
     // getters i setters
@@ -99,6 +102,14 @@ public class User {
 
     public void setPassword(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     // equals() and hashCode()

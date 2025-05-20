@@ -7,6 +7,7 @@ public class UserProfileDto {
     private String schoolLevel;
     private String username;
     private String email;
+    private String profilePicture;
 
     // Default konstruktor
     public UserProfileDto() {
@@ -58,5 +59,13 @@ public class UserProfileDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

@@ -237,8 +237,8 @@ export default function AuthLayout({
         </Link>
       </nav>
 
-      <main className="w-full md:w-3/4">
-        <div className="">{children}</div>
+      <main className="w-full md:w-3/4 flex flex-col">
+        <div className="flex-grow overflow-auto">{children}</div>
       </main>
     </div>
   );

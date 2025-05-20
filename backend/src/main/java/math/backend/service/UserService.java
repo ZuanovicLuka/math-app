@@ -1,22 +1,35 @@
 package math.backend.service;
 
+import math.backend.db.SupabaseS3Service;
 import math.backend.dto.UserProfileDto;
 import math.backend.dto.UserRegistrationDto;
+import math.backend.dto.UserUpdateDto;
+import math.backend.mapper.UserMapper;
 import math.backend.model.User;
 import math.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Objects;
+import java.util.*;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SupabaseS3Service supabaseS3Service;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SupabaseS3Service supabaseS3Service) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.supabaseS3Service = supabaseS3Service;
     }
 
     public Long registerUser(UserRegistrationDto registrationDto) {
@@ -96,7 +109,99 @@ public class UserService {
         profileDto.setSchoolLevel(user.getSchoolLevel());
         profileDto.setUsername(user.getUsername());
         profileDto.setEmail(user.getEmail());
+        profileDto.setProfilePicture(user.getProfilePicture());
 
         return profileDto;
+    }
+
+    public void updateProfilePicture(Long userId, MultipartFile file) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen!"));
+
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("Nije predan file ili je prazan!");
+        }
+
+        try {
+            // Generate unique filename
+            String originalFilename = file.getOriginalFilename();
+            String uniqueFilename = UUID.randomUUID().toString()
+                    + (originalFilename != null ? "-" + originalFilename : "");
+
+            // Save the file to a temporary location
+            File tempFile = File.createTempFile("profilepic-", "-" + uniqueFilename);
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(file.getBytes());
+            }
+
+            // Upload the file to Supabase bucket
+            String bucketName = "profilne";
+            supabaseS3Service.uploadFile(bucketName, uniqueFilename, tempFile.getAbsolutePath());
+
+            // Construct the public URL
+            String newProfilePicUrl = "https://iqszvfglmcrhvenpdgxt.supabase.co/storage/v1/object/public/"
+                    + bucketName + "/" + uniqueFilename;
+
+            // Clean up temp file
+            tempFile.delete();
+
+            // Save the URL to the user record
+            user.setProfilePicture(newProfilePicUrl);
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to upload new profile picture.", e);
+        }
+    }
+
+    public UserProfileDto updateUserProfile(Long userId, UserUpdateDto updateDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen!!!"));
+
+        // Validacija jedinstvenosti username-a i email-a
+        Map<String, String> errors = new HashMap<>();
+
+        // Provjera username-a samo ako se promijenio
+        if (!user.getUsername().equals(updateDto.getUsername())) {
+            Optional<User> existingUserByUsername = userRepository.findByUsername(updateDto.getUsername());
+            if (existingUserByUsername.isPresent()) {
+                errors.put("usernameError", "Korisničko ime je zauzeto!");
+            }
+        }
+
+        // Provjera email-a samo ako se promijenio
+        if (!user.getEmail().equals(updateDto.getEmail())) {
+            Optional<User> existingUserByEmail = userRepository.findByEmail(updateDto.getEmail());
+            if (existingUserByEmail.isPresent()) {
+                errors.put("emailError", "Email je zauzet!");
+            }
+        }
+
+        if (!errors.isEmpty()) {
+            throw new UpdateException(errors);
+        }
+
+        // Ažuriranje podataka, ako nema error-a
+        user.setFirstName(updateDto.getFirstName());
+        user.setLastName(updateDto.getLastName());
+        user.setUsername(updateDto.getUsername());
+        user.setEmail(updateDto.getEmail());
+
+        User updatedUser = userRepository.save(user);
+        UserProfileDto dto = UserMapper.toDto(updatedUser);
+
+        return dto;
+    }
+
+    public static class UpdateException extends RuntimeException {
+        private final Map<String, String> errors;
+
+        public UpdateException(Map<String, String> errors) {
+            super("Update failed");
+            this.errors = errors;
+        }
+
+        public Map<String, String> getErrors() {
+            return errors;
+        }
     }
 }
