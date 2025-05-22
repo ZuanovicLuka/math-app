@@ -21,6 +21,14 @@ export default function AuthLayout({
     return pathname === path;
   };
 
+  const isQuizActive = (pathname: string) => {
+    return (
+      pathname === "/quiz" ||
+      pathname.startsWith("/quiz/start") ||
+      pathname.startsWith("/quiz/finished")
+    );
+  };
+
   if (userQuery.isLoading) {
     return (
       <div className="flex flex-col gap-1 justify-center items-center bg-stone-100 min-h-screen text-gray-700">
@@ -76,12 +84,12 @@ export default function AuthLayout({
             <Link
               href={"/quiz"}
               className={`group flex flex-col items-center gap-3 p-1 rounded-xl transition-all ${
-                isActive("/quiz")
+                isQuizActive(pathname)
                   ? "bg-blue-100/80 shadow-md border border-blue-200"
                   : "hover:bg-gray-100"
               }`}
             >
-              {isActive("/quiz") ? (
+              {isQuizActive(pathname) ? (
                 <>
                   <MdQuestionMark size={55} className="text-blue-700" />
                   <p className="font-medium font-sans text-xl lg:text-2xl text-blue-700">
@@ -179,17 +187,17 @@ export default function AuthLayout({
         <Link
           href={"/quiz"}
           className={`flex flex-col items-center justify-center rounded-lg transition-all py-2 w-24 ${
-            isActive("/quiz") ? "bg-blue-100/80" : "hover:bg-gray-100"
+            isQuizActive(pathname) ? "bg-blue-100/80" : "hover:bg-gray-100"
           }`}
         >
-          {isActive("/quiz") ? (
+          {isQuizActive(pathname) ? (
             <MdQuestionMark size={38} className="text-blue-700" />
           ) : (
             <MdQuestionMark size={38} className="text-gray-600" />
           )}
           <p
             className={`mt-1 font-medium font-sans ${
-              isActive("/quiz") ? "text-blue-700" : "text-gray-600"
+              isQuizActive(pathname) ? "text-blue-700" : "text-gray-600"
             }`}
           >
             Kviz

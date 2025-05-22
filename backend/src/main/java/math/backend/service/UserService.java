@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
@@ -203,5 +202,9 @@ public class UserService {
         public Map<String, String> getErrors() {
             return errors;
         }
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
     }
 }

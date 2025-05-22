@@ -6,7 +6,7 @@ export default function Rank() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+    <div className="h-full flex flex-col items-center justify-center bg-blue-100 p-6 pb-40 md:pb-0">
       <p className="text-2xl font-bold mb-6">Rank...</p>
       <button
         onClick={() => {

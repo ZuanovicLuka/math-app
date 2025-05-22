@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useGetUser } from "~/queries/getUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   PencilIcon,
   CheckIcon,
@@ -45,6 +45,29 @@ export default function ProfilePage() {
   });
 
   const [errors, setErrors] = useState<any>({});
+
+  // potrebne stvari za logout vezane uz aktivan kviz
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [hasActiveQuiz, setHasActiveQuiz] = useState(false);
+
+  // na svaki refresh se provjeri postoji li aktivan kviz
+  useEffect(() => {
+    const checkActiveQuiz = async () => {
+      try {
+        const [data, status] = await apiCall("/quizzes/status", {
+          method: "GET",
+        });
+
+        if (status == 200) {
+          setHasActiveQuiz(data.started && !data.completed); // ako je kviz započet i nije završen => true
+        }
+      } catch (error) {
+        console.error("Error checking quiz status:", error);
+      }
+    };
+
+    checkActiveQuiz();
+  }, []);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -172,6 +195,89 @@ export default function ProfilePage() {
       </div>
     );
   }
+
+  const LogoutConfirmationModal = () => {
+    const handleLogout = async () => {
+      if (hasActiveQuiz) {
+        try {
+          // dohvati odgovore iz localStorage-a
+          const savedAnswers = localStorage.getItem("selectedAnswers");
+          const selectedAnswers = savedAnswers ? JSON.parse(savedAnswers) : [];
+
+          // formatiramo datum kao YYYY-MM-DD
+          const today = new Date();
+          const quizDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+          const answersString = selectedAnswers.join(",");
+
+          const requestBody = {
+            quizDate: quizDate,
+            answers: answersString,
+          };
+
+          const [data, status] = await apiCall(`/quizzes/finish`, {
+            method: "POST",
+            body: JSON.stringify(requestBody),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (status === 200) {
+            // ako je kviz uspješno završen, nastavi s odjavom
+            console.log(data);
+            localStorage.clear();
+            router.push("/");
+          } else {
+            console.error("Greška pri završetku kviza:", data);
+            setShowLogoutModal(false);
+          }
+        } catch (error) {
+          console.error("Greška pri završetku kviza:", error);
+          setShowLogoutModal(false);
+        }
+      } else {
+        // ako nema aktivnog kviza, samo odjavi korisnika
+        localStorage.clear();
+        router.push("/");
+      }
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-xl p-6 max-w-md w-full">
+          <h3 className="text-xl font-bold text-gray-800 mb-4">
+            Potvrda odjave
+          </h3>
+          <div className="text-gray-600 mb-6">
+            <p className="text-gray-700 mb-2">
+              Jeste li sigurni da se želite odjaviti?
+            </p>
+            {hasActiveQuiz && (
+              <p className="text-gray-700">
+                Ako se odjavite sa započetim kvizom, bit će poslani odgovori
+                koje ste zadnje riješili i više nećete moći pristupiti današnjem
+                kvizu.
+              </p>
+            )}
+          </div>
+          <div className="flex space-x-4">
+            <button
+              onClick={handleLogout}
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+            >
+              Da, odjavi me
+            </button>
+            <button
+              onClick={() => setShowLogoutModal(false)}
+              className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+            >
+              Odustani
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-blue-100 p-6 pb-40 md:pb-0">
@@ -374,10 +480,7 @@ export default function ProfilePage() {
                 Uredi profil
               </button>
               <button
-                onClick={() => {
-                  localStorage.clear();
-                  router.push("/");
-                }}
+                onClick={() => setShowLogoutModal(true)}
                 className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
               >
                 <ArrowLeftOnRectangleIcon className="h-5 w-5 mr-2" />
@@ -387,6 +490,7 @@ export default function ProfilePage() {
           )}
         </div>
       </div>
+      {showLogoutModal && <LogoutConfirmationModal />}
     </div>
   );
 }
