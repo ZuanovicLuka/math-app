@@ -12,6 +12,7 @@ public class UserMapper {
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setSchoolLevel(user.getSchoolLevel());
+        dto.setGrade(user.getGrade());
         dto.setProfilePicture(user.getProfilePicture());
         return dto;
     }

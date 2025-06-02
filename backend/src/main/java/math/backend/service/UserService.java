@@ -9,14 +9,9 @@ import math.backend.model.User;
 import math.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 import java.util.*;
 
 @Service
@@ -51,6 +46,7 @@ public class UserService {
         user.setFirstName(registrationDto.getFirstName());
         user.setLastName(registrationDto.getLastName());
         user.setSchoolLevel(registrationDto.getSchoolLevel());
+        user.setGrade(registrationDto.getGrade());
         user.setUsername(registrationDto.getUsername());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
@@ -106,6 +102,7 @@ public class UserService {
         profileDto.setFirstName(user.getFirstName());
         profileDto.setLastName(user.getLastName());
         profileDto.setSchoolLevel(user.getSchoolLevel());
+        profileDto.setGrade(user.getGrade());
         profileDto.setUsername(user.getUsername());
         profileDto.setEmail(user.getEmail());
         profileDto.setProfilePicture(user.getProfilePicture());

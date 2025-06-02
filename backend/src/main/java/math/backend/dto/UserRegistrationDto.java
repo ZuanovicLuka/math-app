@@ -17,6 +17,9 @@ public class UserRegistrationDto {
     @NotNull(message = "School level is required")
     private String schoolLevel;
 
+    @NotNull(message = "Grade is required")
+    private String grade;
+
     @NotNull(message = "Username is required")
     @Size(min = 4, message = "Username must be at least 4 characters")
     private String username;
@@ -52,6 +55,14 @@ public class UserRegistrationDto {
 
     public void setSchoolLevel(String schoolLevel) {
         this.schoolLevel = schoolLevel;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     public String getUsername() {

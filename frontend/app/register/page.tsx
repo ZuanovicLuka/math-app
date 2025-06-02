@@ -32,6 +32,7 @@ export default function Register() {
     email: "",
     password: "",
     schoolLevel: "",
+    grade: "",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -46,6 +47,15 @@ export default function Register() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSchoolLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      schoolLevel: value,
+      grade: "", // kad se promijeni razina skole, resetira se grade
+    });
   };
 
   const handleSubmit = async (e: any) => {
@@ -63,6 +73,7 @@ export default function Register() {
         email: formData.email,
         password: formData.password,
         schoolLevel: formData.schoolLevel,
+        grade: formData.grade,
       };
 
       // Slanje podataka na backend koristeći apiCall
@@ -105,6 +116,43 @@ export default function Register() {
         console.error("Došlo je do greške:", error);
       }
     }
+  };
+
+  // dodano za odabrati koji si razred
+  const renderGradeOptions = () => {
+    const grades =
+      formData.schoolLevel === "Osnovna škola"
+        ? Array.from({ length: 8 }, (_, i) => i + 1)
+        : Array.from({ length: 4 }, (_, i) => i + 1);
+
+    return (
+      <div className="mb-4">
+        <div className="text-center mb-2">
+          <p className="text-base md:text-lg text-textColor">
+            Odaberite svoj razred:
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          {grades.map((grade) => (
+            <label
+              key={grade}
+              className="text-sm md:text-base hover:cursor-pointer has-[:checked]:bg-[#1f3088] has-[:checked]:text-gray-100 bg-[#ffff] border-1 border-gray-400 rounded-md w-24 h-9 flex justify-center items-center text-textColor"
+            >
+              <input
+                type="radio"
+                className="opacity-0 absolute"
+                onChange={handleChange}
+                name="grade"
+                value={grade}
+                checked={formData.grade === grade.toString()}
+                required
+              />
+              {grade}. razred
+            </label>
+          ))}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -182,7 +230,7 @@ export default function Register() {
                 <input
                   type="radio"
                   className="opacity-0 absolute"
-                  onChange={handleChange}
+                  onChange={handleSchoolLevelChange}
                   name="schoolLevel"
                   value={level}
                   checked={formData.schoolLevel === level}
@@ -192,6 +240,9 @@ export default function Register() {
               </label>
             ))}
           </div>
+
+          {formData.schoolLevel && renderGradeOptions()}
+
           <button
             type="submit"
             className="bg-blue-500 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"

@@ -22,6 +22,9 @@ public class User {
     @Column(name = "schoolLevel", nullable = false)
     private String schoolLevel;
 
+    @Column(name = "grade", nullable = false)
+    private String grade;
+
     // unique jer ne smiju postojati 2 ista username-a, email-a
     @Column(nullable = false, unique = true)
     private String username;
@@ -40,11 +43,12 @@ public class User {
     }
 
     // konstruktor sa svim poljima
-    public User(String firstName, String lastName, String schoolLevel,
+    public User(String firstName, String lastName, String schoolLevel, String grade,
                 String username, String email, String passwordHash, String profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.schoolLevel = schoolLevel;
+        this.grade = grade;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -78,6 +82,14 @@ public class User {
 
     public void setSchoolLevel(String schoolLevel) {
         this.schoolLevel = schoolLevel;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     public String getUsername() {

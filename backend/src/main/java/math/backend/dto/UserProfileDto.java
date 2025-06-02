@@ -5,6 +5,7 @@ public class UserProfileDto {
     private String firstName;
     private String lastName;
     private String schoolLevel;
+    private String grade;
     private String username;
     private String email;
     private String profilePicture;
@@ -43,6 +44,14 @@ public class UserProfileDto {
 
     public void setSchoolLevel(String schoolLevel) {
         this.schoolLevel = schoolLevel;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     public String getUsername() {
