@@ -279,6 +279,16 @@ export default function ProfilePage() {
     );
   };
 
+  const getBackgroundColor = (firstName: string, lastName: string) => {
+    const fullName = `${firstName}${lastName}`;
+    let hash = 0;
+    for (let i = 0; i < fullName.length; i++) {
+      hash = fullName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const hue = Math.abs(hash) % 360;
+    return `hsl(${hue}, 70%, 50%)`;
+  };
+
   return (
     <div className="h-full flex flex-col items-center justify-center bg-blue-100 p-6 pb-40 md:pb-0">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg lg:max-w-xl">
@@ -291,7 +301,15 @@ export default function ProfilePage() {
                 className="w-32 h-32 rounded-full object-cover shadow-md"
               />
             ) : (
-              <div className="w-32 h-32 rounded-full bg-blue-700 flex items-center justify-center text-white text-4xl font-bold shadow-md">
+              <div
+                className="w-32 h-32 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-md"
+                style={{
+                  backgroundColor: getBackgroundColor(
+                    userQuery.data.user.firstName,
+                    userQuery.data.user.lastName
+                  ),
+                }}
+              >
                 {initials}
               </div>
             )}
