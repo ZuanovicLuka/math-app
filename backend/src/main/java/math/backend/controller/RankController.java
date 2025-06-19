@@ -50,10 +50,10 @@ public class RankController {
         try {
             User user = getUserFromToken(authHeader);
 
-            Pageable topFifty = PageRequest.of(0, 20);
+            Pageable topTwenty = PageRequest.of(0, 20);
             List<UserQuiz> topQuizzes = userQuizRepository
-                    .findByQuiz_QuizDateAndQuiz_SchoolLevelAndEndTimeIsNotNullOrderByScoreDescTimeTakenSecondsAsc(
-                            date, user.getSchoolLevel(), topFifty);
+                    .findByQuiz_QuizDateAndQuiz_SchoolLevelAndUser_GradeAndEndTimeIsNotNullOrderByScoreDescTimeTakenSecondsAsc(
+                            date, user.getSchoolLevel(), user.getGrade(), topTwenty);
 
             List<UserRankingDTO> result = new ArrayList<>();
             int currentPosition = 1;
@@ -137,6 +137,7 @@ public class RankController {
             long rank = userQuizRepository.findUserRank(
                     date,
                     user.getSchoolLevel(),
+                    user.getGrade(),
                     userQuiz.getScore(),
                     userQuiz.getTimeTakenSeconds());
 

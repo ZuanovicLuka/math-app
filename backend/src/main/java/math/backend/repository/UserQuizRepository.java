@@ -17,18 +17,20 @@ public interface UserQuizRepository extends JpaRepository<UserQuiz, Long> {
     @Query("SELECT uq FROM UserQuiz uq WHERE uq.user = :user AND DATE(uq.startTime) = :date")
     Optional<UserQuiz> findTodayQuizByUser(@Param("user") User user, @Param("date") LocalDate date);
 
-    List<UserQuiz> findByQuiz_QuizDateAndQuiz_SchoolLevelAndEndTimeIsNotNullOrderByScoreDescTimeTakenSecondsAsc(
-        LocalDate quizDate,
-        String schoolLevel,
-        Pageable pageable
+    List<UserQuiz> findByQuiz_QuizDateAndQuiz_SchoolLevelAndUser_GradeAndEndTimeIsNotNullOrderByScoreDescTimeTakenSecondsAsc(
+            LocalDate quizDate,
+            String schoolLevel,
+            String grade,
+            Pageable pageable
     );
 
     @Query("SELECT COUNT(uq) + 1 FROM UserQuiz uq " +
-            "WHERE uq.quiz.quizDate = :date AND uq.quiz.schoolLevel = :schoolLevel AND uq.endTime IS NOT NULL " +
+            "WHERE uq.quiz.quizDate = :date AND uq.quiz.schoolLevel = :schoolLevel AND uq.user.grade = :grade AND uq.endTime IS NOT NULL " +
             "AND (uq.score > :score OR (uq.score = :score AND uq.timeTakenSeconds < :timeTakenSeconds))")
     long findUserRank(
             @Param("date") LocalDate date,
             @Param("schoolLevel") String schoolLevel,
+            @Param("grade") String grade,
             @Param("score") int score,
             @Param("timeTakenSeconds") int timeTakenSeconds);
 }

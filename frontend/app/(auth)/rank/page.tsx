@@ -200,6 +200,12 @@ export default function Rank() {
                   </span>
                   <br />
                   <span className="text-yellow-200">
+                    3. Rangiranje se vrši unutar istog razreda (
+                    {userQuery.data.user.schoolLevel} -{" "}
+                    {userQuery.data.user.grade}. razred)
+                  </span>
+                  <br />
+                  <span className="text-yellow-200">
                     **U slučaju istog broja bodova i vremena, korisnici dijele
                     mjesto**
                   </span>
@@ -208,7 +214,10 @@ export default function Rank() {
 
               <div className="flex justify-between items-center mt-2 text-base">
                 <div className="text-blue-200 font-medium">
-                  <p>{userQuery.data.user.schoolLevel}</p>
+                  <p>
+                    {userQuery.data.user.schoolLevel} -{" "}
+                    {userQuery.data.user.grade}. razred
+                  </p>
                 </div>
                 <div className="text-blue-100 font-medium">
                   <p>

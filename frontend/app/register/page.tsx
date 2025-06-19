@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
 import { apiCall } from "~/api";
+import { z } from "zod";
 
 const signUpSchema = z.object({
   first_name: z

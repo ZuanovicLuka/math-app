@@ -463,7 +463,8 @@ export default function ProfilePage() {
                   Razina:
                 </span>
                 <span className="text-gray-800 font-semibold flex-1 text-md lg:text-lg">
-                  {userQuery.data.user.schoolLevel}, {userQuery.data.user.grade}. razred
+                  {userQuery.data.user.schoolLevel}, {userQuery.data.user.grade}
+                  . razred
                 </span>
               </>
             )}

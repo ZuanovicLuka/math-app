@@ -1,7 +1,10 @@
 package math.backend.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
@@ -37,6 +40,10 @@ public class User {
 
     @Column(name = "profile_picture") // moze biti NULL
     private String profilePicture;
+
+    // dodao sam vezu na userTasks gdje cu pratiti koje zadatke je neki user rijesio
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserTask> userTasks = new ArrayList<>();
 
     // defaultni konstruktor (required by JPA)
     public User() {
@@ -122,6 +129,24 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<UserTask> getUserTasks() {
+        return userTasks;
+    }
+
+    public void setUserTasks(List<UserTask> userTasks) {
+        this.userTasks = userTasks;
+    }
+
+    public void addUserTask(UserTask userTask) {
+        userTasks.add(userTask);
+        userTask.setUser(this);
+    }
+
+    public void removeUserTask(UserTask userTask) {
+        userTasks.remove(userTask);
+        userTask.setUser(null);
     }
 
     // equals() and hashCode()
