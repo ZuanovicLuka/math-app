@@ -11,4 +11,10 @@ import java.util.Optional;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     @Query("SELECT q FROM Quiz q LEFT JOIN FETCH q.questions WHERE q.quizDate = :date AND q.schoolLevel = :schoolLevel")
     Optional<Quiz> findByQuizDateAndSchoolLevel(@Param("date") LocalDate date, @Param("schoolLevel") String schoolLevel);
+
+    @Query("SELECT q FROM Quiz q LEFT JOIN FETCH q.questions WHERE q.quizDate = :date AND q.schoolLevel = :schoolLevel AND q.grade = :grade")
+    Optional<Quiz> findByQuizDateAndSchoolLevelAndGrade(
+            @Param("date") LocalDate date,
+            @Param("schoolLevel") String schoolLevel,
+            @Param("grade") String grade);
 }

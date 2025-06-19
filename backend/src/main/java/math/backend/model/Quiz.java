@@ -19,6 +19,9 @@ public class Quiz {
     @Column(name = "school_level", nullable = false)
     private String schoolLevel;
 
+    @Column(name = "grade", nullable = false)
+    private String grade;
+
     // cascade ovdje radi ako obrisemo questions brise se sve iz tablice QuizQuestion vezano za taj kviz
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<QuizQuestion> questions;
@@ -28,9 +31,10 @@ public class Quiz {
     }
 
     // Konstruktor sa svim poljima osim ID-ja (generira se automatski)
-    public Quiz(LocalDate quizDate, String schoolLevel, List<QuizQuestion> questions) {
+    public Quiz(LocalDate quizDate, String schoolLevel, String grade, List<QuizQuestion> questions) {
         this.quizDate = quizDate;
         this.schoolLevel = schoolLevel;
+        this.grade = grade;
         this.questions = questions;
 
         // Postavi dvosmjernu vezu ako postoje pitanja
@@ -40,8 +44,8 @@ public class Quiz {
     }
 
     // Konstruktor bez pitanja (može se dodati kasnije)
-    public Quiz(LocalDate quizDate, String schoolLevel) {
-        this(quizDate, schoolLevel, null);
+    public Quiz(LocalDate quizDate, String schoolLevel, String grade) {
+        this(quizDate, schoolLevel, grade, null);
     }
 
     // Getteri i setteri ostaju isti kao što si ih već napisao/la
@@ -67,6 +71,14 @@ public class Quiz {
 
     public void setSchoolLevel(String schoolLevel) {
         this.schoolLevel = schoolLevel;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
     public List<QuizQuestion> getQuestions() {

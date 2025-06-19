@@ -27,8 +27,8 @@ public class QuizService {
         this.userQuizRepository = userQuizRepository;
     }
 
-    public Optional<Quiz> getDailyQuiz(String schoolLevel) {
-        return quizRepository.findByQuizDateAndSchoolLevel(LocalDate.now(), schoolLevel);
+    public Optional<Quiz> getDailyQuiz(String schoolLevel, String grade) {
+        return quizRepository.findByQuizDateAndSchoolLevelAndGrade(LocalDate.now(), schoolLevel, grade);
     }
 
     // ovo transactional samo označava da se sve što se radi u tijelu smatra jednom aktivnosti
@@ -100,8 +100,8 @@ public class QuizService {
         return userQuizRepository.findTodayQuizByUser(user, LocalDate.now()).isPresent();
     }
 
-    public QuizDTO getDailyQuizDTO(String schoolLevel) {
-        Quiz quiz = quizRepository.findByQuizDateAndSchoolLevel(LocalDate.now(), schoolLevel)
+    public QuizDTO getDailyQuizDTO(String schoolLevel, String grade) {
+        Quiz quiz = quizRepository.findByQuizDateAndSchoolLevelAndGrade(LocalDate.now(), schoolLevel, grade)
                 .orElseThrow(() -> new RuntimeException("Nema kviza za danas"));
 
         return mapQuizToDTO(quiz);
@@ -112,11 +112,12 @@ public class QuizService {
         dto.setQuizId(quiz.getQuizId());
         dto.setQuizDate(quiz.getQuizDate());
         dto.setSchoolLevel(quiz.getSchoolLevel());
+        dto.setGrade(quiz.getGrade());
 
         List<QuestionDTO> questionDTOs = quiz.getQuestions().stream()
                 .map(q -> new QuestionDTO(
                         q.getText(),
-                        q.getOptions().split(","),
+                        q.getOptions().split("@"),
                         q.getCorrectAnswerIndex()))
                 .collect(Collectors.toList());
 

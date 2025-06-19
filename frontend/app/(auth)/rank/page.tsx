@@ -32,7 +32,7 @@ export default function Rank() {
   // ovo sluzi da pratimo je li osoba zapocela kviz i je li ga zavrsila (za footer)
   const [started, setStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [userRank, setUserRank] = useState<Player | null>(null); // sluzi ako nisi u top 50
+  const [userRank, setUserRank] = useState<Player | null>(null); // sluzi ako nisi u top 20
 
   const fetchTopUsers = async (selectedDate: Date) => {
     try {
@@ -330,7 +330,7 @@ export default function Rank() {
                               </h3>
                               <div className="flex justify-between text-sm text-gray-700">
                                 <span>
-                                  Rezultat: <strong>{player.score} / 20</strong>
+                                  Rezultat: <strong>{player.score} / 10</strong>
                                 </span>
                                 <span>
                                   Vrijeme:{" "}
@@ -396,7 +396,7 @@ export default function Rank() {
                               <div className="flex justify-between text-sm text-gray-700">
                                 <span>
                                   Rezultat:{" "}
-                                  <strong>{userRank.score} / 20</strong>
+                                  <strong>{userRank.score} / 10</strong>
                                 </span>
                                 <span>
                                   Vrijeme:{" "}

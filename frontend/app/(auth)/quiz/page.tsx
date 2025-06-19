@@ -16,14 +16,14 @@ export default function Quiz() {
   const [timeExpired, setTimeExpired] = useState(false);
 
   // funkcija koja iz localstorage-a dohvaća vrijeme kada je kviz bio započet i
-  // ako je sada kada smo load-ali stranicu prošlo više od 60 minuta od kada smo započeli kviz idemo na page
+  // ako je sada kada smo load-ali stranicu prošlo više od 20 minuta od kada smo započeli kviz idemo na page finished
   const checkTimeExpired = () => {
     if (typeof window !== "undefined") {
       const startTime = localStorage.getItem("startTime");
       if (startTime) {
         const now = Date.now();
         const elapsedSeconds = Math.floor((now - Number(startTime)) / 1000);
-        return elapsedSeconds >= 60 * 60;
+        return elapsedSeconds >= 20 * 60;
       }
     }
     return false;
@@ -78,7 +78,7 @@ export default function Quiz() {
       const data = await apiCall(`/quizzes/generate-daily-quizzes`, {
         method: "POST",
       });
-      console.log(data);
+
       router.push("/quiz/start");
     } catch (error) {
       console.error("Error generating quizzes:", error);
@@ -120,12 +120,14 @@ export default function Quiz() {
           <div className="mb-8">
             <p className="text-gray-700 mb-4 text-justify">
               Dnevni kviz sastoji se od{" "}
-              <span className="font-bold text-gray-700">20</span> raznovrsnih
+              <span className="font-bold text-gray-700">10</span> raznovrsnih
               pitanja iz područja matematike za vašu razinu obrazovanja:{" "}
-              <span className="font-bold text-gray-700">{razinaKviza}</span>.
-              Imate točno{" "}
-              <span className="font-bold text-gray-700">60 minuta</span> da
-              riješite cijeli kviz. Vaš rezultat će ovisiti i o točnosti
+              <span className="font-bold text-gray-700">
+                {razinaKviza}, {userQuery.data.user.grade}. razred
+              </span>
+              . Imate točno{" "}
+              <span className="font-bold text-gray-700">20 minuta</span> da
+              riješite cijeli kviz. Vaš rezultat će ovisiti o točnosti
               odgovora i o brzini rješavanja -{" "}
               <span className="font-bold text-gray-700">
                 što točniji i brži budete, to bolji rezultat postižete!

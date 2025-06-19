@@ -54,7 +54,6 @@ export default function QuizFinish() {
         };
 
         setQuizData(quizData);
-        console.log("data:", quizData);
       }
     } catch (error) {
       console.error("Error getting quiz status:", error);

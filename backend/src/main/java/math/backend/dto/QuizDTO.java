@@ -7,16 +7,18 @@ public class QuizDTO {
     private Long quizId;
     private LocalDate quizDate;
     private String schoolLevel;
+    private String grade;
     private List<QuestionDTO> questions;
 
     // Konstruktori
     public QuizDTO() {
     }
 
-    public QuizDTO(Long quizId, LocalDate quizDate, String schoolLevel, List<QuestionDTO> questions) {
+    public QuizDTO(Long quizId, LocalDate quizDate, String schoolLevel, String grade, List<QuestionDTO> questions) {
         this.quizId = quizId;
         this.quizDate = quizDate;
         this.schoolLevel = schoolLevel;
+        this.grade = grade;
         this.questions = questions;
     }
 
@@ -43,6 +45,14 @@ public class QuizDTO {
 
     public void setSchoolLevel(String schoolLevel) {
         this.schoolLevel = schoolLevel;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getGrade() {
+        return grade;
     }
 
     public List<QuestionDTO> getQuestions() {

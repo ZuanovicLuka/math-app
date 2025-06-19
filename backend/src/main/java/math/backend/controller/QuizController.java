@@ -60,7 +60,7 @@ public class QuizController {
                 ));
             }
 
-            QuizDTO quizDTO = quizService.getDailyQuizDTO(user.getSchoolLevel());
+            QuizDTO quizDTO = quizService.getDailyQuizDTO(user.getSchoolLevel(), user.getGrade());
 
             if (!quizService.hasUserStartedQuizToday(user)) {
                 // Ovdje možete dodati logiku za početak kviza ako je potrebno
@@ -89,7 +89,7 @@ public class QuizController {
         try {
             User user = getUserFromToken(authHeader);
 
-            QuizDTO quizDTO = quizService.getDailyQuizDTO(user.getSchoolLevel());
+            QuizDTO quizDTO = quizService.getDailyQuizDTO(user.getSchoolLevel(), user.getGrade());
 
             return ResponseEntity.ok(Map.of(
                     "status", "uspjeh",
@@ -120,7 +120,7 @@ public class QuizController {
                 ));
             }
 
-            Quiz quiz = quizService.getDailyQuiz(user.getSchoolLevel())
+            Quiz quiz = quizService.getDailyQuiz(user.getSchoolLevel(), user.getGrade())
                     .orElseThrow(() -> new RuntimeException("Današnji kviz nije pronađen"));
 
             UserQuiz startedQuiz = userQuizRepository.findByUserAndQuiz(user, quiz)
@@ -129,8 +129,8 @@ public class QuizController {
             LocalDateTime endTime = LocalDateTime.now();
             long timeTakenSeconds = Duration.between(startedQuiz.getStartTime(), endTime).getSeconds();
 
-            // maksimalno dozvoljeno vrijeme u sekundama (60 minuta)
-            final long MAX_QUIZ_TIME_SECONDS = 60 * 60;
+            // maksimalno dozvoljeno vrijeme u sekundama (20 minuta)
+            final long MAX_QUIZ_TIME_SECONDS = 20 * 60;
 
             // ako je korisnik premašio vrijeme, postavimo na maksimalno dozvoljeno
             if (timeTakenSeconds > MAX_QUIZ_TIME_SECONDS) {
@@ -187,11 +187,9 @@ public class QuizController {
         try {
             User user = getUserFromToken(authHeader);
 
-            // Find quiz for the requested date and user's school level
-            Quiz quiz = quizRepository.findByQuizDateAndSchoolLevel(date, user.getSchoolLevel())
+            Quiz quiz = quizRepository.findByQuizDateAndSchoolLevelAndGrade(date, user.getSchoolLevel(), user.getGrade())
                     .orElseThrow(() -> new RuntimeException("Kviz nije pronađen za traženi datum"));
 
-            // Find user's attempt for this quiz
             UserQuiz userQuiz = userQuizRepository.findByUserAndQuiz(user, quiz)
                     .orElseThrow(() -> new RuntimeException("Niste rješavali kviz za traženi datum"));
 
@@ -211,7 +209,7 @@ public class QuizController {
         }
     }
 
-    // ovo je api za testiranje generiranja dnevnog kviza za osnovnu i srednju školu
+    // ovo je api za generiranje svih kvizova od jednom
     @PostMapping("/generate-daily-quizzes")
     public ResponseEntity<?> manuallyGenerateDailyQuizzes() {
         dailyQuizGenerator.generateDailyQuizzes();

@@ -31,7 +31,8 @@ export default function LectionLanding() {
 
         <div className="space-y-4">
           <p className="text-lg text-gray-800">
-            Smatraš da ti treba ponavljanje teorijskog gradiva za ovu lekciju?
+            Smatraš li da ti treba ponavljanje teorijskog gradiva za ovu
+            lekciju?
           </p>
 
           {theoryLink ? (
@@ -54,7 +55,7 @@ export default function LectionLanding() {
 
         <div className="space-y-4">
           <p className="text-lg text-gray-800">
-            Ako si spreman, provjeri svoje znanje:
+            Ako si spreman, provjeri svoje znanje!
           </p>
           <button
             onClick={() => router.push(`/lections/tasks/${lectionId}`)}

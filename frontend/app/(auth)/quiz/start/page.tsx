@@ -45,8 +45,8 @@ export default function QuizStart() {
     return null;
   });
 
-  // 60 minuta u sekundama
-  const [timeLeft, setTimeLeft] = useState(60 * 60);
+  // 20 minuta u sekundama
+  const [timeLeft, setTimeLeft] = useState(20 * 60);
 
   // funkcija koja dohvaća stanje kviza (started i completed bools)
   const getQuizStatus = async () => {
@@ -91,7 +91,6 @@ export default function QuizStart() {
         };
 
         setQuizData(quizData);
-        console.log("data:", quizData);
       }
     } catch (error) {
       console.error("Error getting quiz status:", error);
@@ -164,7 +163,7 @@ export default function QuizStart() {
     const calculateRemainingTime = () => {
       const now = Date.now(); // u milisekundama
       const elapsedSeconds = Math.floor((now - startTime) / 1000); // zato dijelimo sa 1000 da dobijemo sekunde
-      const remainingTime = 60 * 60 - elapsedSeconds;
+      const remainingTime = 20 * 60 - elapsedSeconds;
       return remainingTime > 0 ? remainingTime : 0;
     };
 

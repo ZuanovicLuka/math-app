@@ -1,1735 +1,930 @@
--- 5. razred, 1. lekcija SKUPOVI
+-- Lekcija: Skup cijelih brojeva
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Skupovi', 'Osnovna škola', '5'
+SELECT 'Skup cijelih brojeva', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Skupovi'
+    WHERE title = 'Skup cijelih brojeva'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- Prvi zadatak
+-- 1. Osnovni pojmovi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je skup?',
-    'Nepovezane stvari@ Kolekcija različitih objekata@ Matematička operacija@ Vrsta broja',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je skup?'
-    );
-
--- Drugi zadatak
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako najčešće označavamo skup?',
-    'Malim slovima@ Velikim slovima@ Brojevima@ Znakovima',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako najčešće označavamo skup?'
-    );
-
--- Treći zadatak
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je element skupa?',
-    'Naziv skupa@ Jedan član skupa@ Veličina skupa@ Operacija između skupova',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je element skupa?'
-    );
-
--- Četvrti zadatak
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako zapisujemo da je broj 5 u skupu A?',
-    '5 ⊂ A@ 5 ∈ A@ A ∈ 5@ A = 5',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako zapisujemo da je broj 5 u skupu A?'
-    );
-
--- Peti zadatak
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je prazan skup?',
-    'Skup s jednim elementom@ Skup bez elemenata@ Skup svih brojeva@ Skup slova',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je prazan skup?'
-    );
+SELECT 'Koji od ovih brojeva pripada skupu cijelih brojeva?', '3.14@ -5@ 1/2@ √2', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji od ovih brojeva pripada skupu cijelih brojeva?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako označavamo prazan skup?',
-    '{ }@ ∅@ 0@ P',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako označavamo prazan skup?'
-    );
+SELECT 'Koji skup obuhvaća sve prirodne brojeve, njihove suprotnosti i nulu?', 'Racionalni brojevi@ Cijeli brojevi@ Prirodni brojevi@ Iracionalni brojevi', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji skup obuhvaća sve prirodne brojeve, njihove suprotnosti i nulu?');
+
+-- 2. Apsolutna vrijednost
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koliko iznosi |-12|?', '-12@ 12@ 0@ 1', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko iznosi |-12|?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je konačan skup?',
-    'Skup koji nema kraj@ Skup s beskonačno elemenata@ Skup s određenim brojem elemenata@ Skup bez pravila',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je konačan skup?'
-    );
+SELECT 'Ako je |x| = 7, koliko može biti x?', 'Samo 7@ Samo -7@ 7 ili -7@ 0', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je |x| = 7, koliko može biti x?');
+
+-- 3. Uspoređivanje cijelih brojeva
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Kako se pravilno piše: -5 ___ -3?', '>@ <@ =@ ≥', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako se pravilno piše: -5 ___ -3?');
+
+-- 4. Zbrajanje i oduzimanje
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koliko je -8 + 5?', '-13@ -3@ 3@ 13', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je -8 + 5?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji od ovih je konačan skup?',
-    'Skup svih prirodnih brojeva@ Skup svih parnih brojeva@ Skup dana u tjednu@ Skup točaka na pravcu',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji od ovih je konačan skup?'
-    );
+SELECT 'Rezultat oduzimanja 4 - 9 je:', '-5@ 5@ -13@ 13', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Rezultat oduzimanja 4 - 9 je:');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je podskup?',
-    'Veći skup@ Manji skup unutar većeg@ Suprotni skup@ Skup bez elemenata',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je podskup?'
-    );
+SELECT 'Koliko je -15 + (-20)?', '-35@ -5@ 5@ 35', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je -15 + (-20)?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako označavamo da je A podskup od B?',
-    'A ⊂ B@ A ∈ B@ B ⊂ A@ A = B',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako označavamo da je A podskup od B?'
-    );
+SELECT 'Koliko je 7 - (-3)?', '4@ 10@ -4@ -10', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 7 - (-3)?');
+
+-- 5. Množenje i dijeljenje
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koliko je -6 × (-7)?', '-42@ 42@ -13@ 1', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je -6 × (-7)?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je presjek skupova?',
-    'Svi elementi iz oba skupa@ Samo zajednički elementi@ Svi osim zajedničkih@ Niti jedan element',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je presjek skupova?'
-    );
+SELECT 'Rezultat dijeljenja -24 ÷ 3 je:', '8@ -8@ 21@ -21', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Rezultat dijeljenja -24 ÷ 3 je:');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako označavamo presjek skupova A i B?',
-    'A ∪ B@ A ∩ B@ A \ B@ A × B',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako označavamo presjek skupova A i B?'
-    );
+SELECT 'Koliko je (-4) × 5 × (-2)?', '-40@ -20@ 20@ 40', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (-4) × 5 × (-2)?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je unija skupova?',
-    'Samo zajednički elementi@ Svi elementi iz oba skupa@ Razlika skupova@ Prazan skup',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je unija skupova?'
-    );
+SELECT 'Koliko je 0 ÷ (-5)?', '-5@ 0@ 5@ Nedefinirano', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 0 ÷ (-5)?');
+
+-- 6. Kombinirane operacije
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koliko je 3 × (-4) + 10?', '-22@ -2@ 2@ 22', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 3 × (-4) + 10?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako označavamo uniju skupova A i B?',
-    'A ∩ B@ A ∪ B@ A \ B@ A ⊂ B',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako označavamo uniju skupova A i B?'
-    );
+SELECT 'Koliko je (8 - 12) × (-3)?', '-12@ 12@ -4@ 4', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (8 - 12) × (-3)?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je razlika skupova A \ B?',
-    'Elementi koji su u A, ali ne i u B@ Elementi koji su u B, ali ne i u A@ Zajednički elementi@ Svi elementi',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je razlika skupova A \ B?'
-    );
+SELECT 'Koliko je -20 ÷ (5 - 10)?', '-4@ 4@ -15@ 15', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je -20 ÷ (5 - 10)?');
+
+-- 7. Riječni zadaci
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Temperatura je pala s 5°C na -3°C. Za koliko je stupnjeva pala temperatura?', '2@ 3@ 5@ 8', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Temperatura je pala s 5°C na -3°C. Za koliko je stupnjeva pala temperatura?');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je primjer skupa?',
-    'Nasumične riječi@ Svi prirodni brojevi manji od 10@ Bilješke u bilježnici@ Vrijeme',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je primjer skupa?'
-    );
+SELECT 'Dubrovački brod je na površini mora (0 m), a podmornica je 120 m ispod njega. Ako podmornica zaroni još 80 m, na kojoj je dubini?', '-40 m@ -80 m@ -120 m@ -200 m', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Dubrovački brod je na površini mora%');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je beskonačan skup?',
-    'Skup s 10 elemenata@ Skup koji se ne može prebrojati@ Skup bez elemenata@ Skup slova',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je beskonačan skup?'
-    );
+SELECT 'Marko ima 50 kn dugovanja (-50 kn), a dobio je 80 kn džeparca. Koliko sada ima novaca?', '-130 kn@ -30 kn@ 30 kn@ 130 kn', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Marko ima 50 kn dugovanja%');
 
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji skup je beskonačan?',
-    'Skup dana u tjednu@ Skup mjeseci u godini@ Skup prirodnih brojeva@ Skup boja dugine',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji skup je beskonačan?'
-    );
+SELECT 'U jednoj igri za 5 pogodaka dobiješ 3 boda, a za svaki promašaj gubiš 1 bod. Ana je imala 7 pogodaka i 4 promašaja. Koliko je bodova osvojila?', '17@ 15@ 13@ 11', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Skup cijelih brojeva' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'U jednoj igri za 5 pogodaka%');
 
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je komplement skupa?',
-    'Svi elementi skupa@ Elementi koji nisu u skupu@ Unija i presjek@ Prazan skup',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je komplement skupa?'
-    );
-
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako označavamo komplement skupa A?',
-    'Aᶜ@ A∪@ A∩@ A°',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako označavamo komplement skupa A?'
-    );
-
--- 5. razred, 2. lekcija SKUP PRIRODNIH BROJEVA
+-- Lekcija: Kut i trokut
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Skup prirodnih brojeva', 'Osnovna škola', '5'
+SELECT 'Kut i trokut', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Skup prirodnih brojeva'
+    WHERE title = 'Kut i trokut'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- Prvi zadatak - Presjek i unija skupova
+-- 1. Osnovni pojmovi o kutovima
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je A = {1, 2, 3} i B = {2, 3, 4}, koliki je A ∩ B?',
-    '{1, 2, 3, 4}@ {2, 3}@ {1, 4}@ { }',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je A = {1, 2, 3} i B = {2, 3, 4}, koliki je A ∩ B?'
-    );
+SELECT 'Koliki je zbroj susjednih kutova na pravcu?', '90°@ 180°@ 270°@ 360°', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliki je zbroj susjednih kutova na pravcu?');
 
--- Drugi zadatak - Presjek i unija skupova
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je A = {1, 2, 3} i B = {2, 3, 4}, koliki je A ∪ B?',
-    '{1, 2, 3, 4}@ {2, 3}@ {1, 4}@ { }',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je A = {1, 2, 3} i B = {2, 3, 4}, koliki je A ∪ B?'
-    );
+SELECT 'Kut od 90° nazivamo:', 'Oštar kut@ Pravi kut@ Tupi kut@ Ispruženi kut', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kut od 90° nazivamo:');
 
--- Treći zadatak - Skup N0
+-- 2. Vrste kutova
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što označava N₀?',
-    'Samo prirodni brojevi@ Prirodni brojevi s nulom@ Cijeli brojevi@ Racionalni brojevi',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što označava N₀?'
-    );
+SELECT 'Koji kut je veći od 90° a manji od 180°?', 'Oštar kut@ Pravi kut@ Tupi kut@ Ispruženi kut', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji kut je veći od 90° a manji od 180°?');
 
--- Četvrti zadatak - Skup N0
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj nije u skupu N₀?',
-    '0@ 1@ -1@ 10',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj nije u skupu N₀?'
-    );
+SELECT 'Koliko iznosi komplementni kut kutu od 35°?', '35°@ 45°@ 55°@ 145°', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko iznosi komplementni kut kutu od 35°?');
 
--- Peti zadatak - Brojevni pravac
+-- 3. Trokuti - osnovna svojstva
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako se zove crta na kojoj su prikazani brojevi?',
-    'Brojevni krug@ Brojevni pravac@ Brojevna mreža@ Brojevna spirala',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako se zove crta na kojoj su prikazani brojevi?'
-    );
+SELECT 'Koliki je zbroj kutova u trokutu?', '90°@ 180°@ 270°@ 360°', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliki je zbroj kutova u trokutu?');
 
--- Šesti zadatak - Uspoređivanje u N0
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je odnos između 5 i 7?',
-    '5 > 7@ 5 = 7@ 5 < 7@ 5 ≥ 7',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je odnos između 5 i 7?'
-    );
+SELECT 'Kako se naziva trokut kojemu su sve stranice različite duljine?', 'Jednakokračan@ Jednakostraničan@ Raznostraničan@ Pravokutan', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako se naziva trokut kojemu su sve stranice različite duljine?');
 
--- Sedmi zadatak - Zaokruživanje u skupu N0
+-- 4. Vrste trokuta prema kutovima
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako zaokružiti 47 na najbližu deseticu?',
-    '40@ 45@ 50@ 47',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako zaokružiti 47 na najbližu deseticu?'
-    );
+SELECT 'Kako se naziva trokut kojemu je jedan kut veći od 90°?', 'Oštrokutan@ Pravokutan@ Tupokutan@ Jednakokračan', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako se naziva trokut kojemu je jedan kut veći od 90°?');
 
--- Osmi zadatak - Zbrajanje i oduzimanje u N0 (svojstva)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo opisuje: a + b = b + a?',
-    'Asocijativnost@ Komutativnost@ Distributivnost@ Neutralni element',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo opisuje: a + b = b + a?'
-    );
+SELECT 'Koliki je zbroj oštrih kutova u pravokutnom trokutu?', '45°@ 60°@ 90°@ 180°', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliki je zbroj oštrih kutova u pravokutnom trokutu?');
 
--- Deveti zadatak - Zbrajanje i oduzimanje u N0 (problemski)
+-- 5. Sukladnost trokuta
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako Marko ima 15 kuna, a potroši 7 kuna, koliko mu je ostalo?',
-    '7 kuna@ 8 kuna@ 15 kuna@ 22 kune',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako Marko ima 15 kuna, a potroši 7 kuna, koliko mu je ostalo?'
-    );
+SELECT 'Koji kriterij za sukladnost trokuta kaže da su trokuti sukladni ako imaju jednake sve tri stranice?', 'S-S-S@ S-K-S@ K-S-K@ K-K-K', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Koji kriterij za sukladnost trokuta kaže');
 
--- Deseti zadatak - Zbrajanje i oduzimanje u N0 (jednadžbe)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: x + 5 = 12',
-    'x = 5@ x = 7@ x = 12@ x = 17',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: x + 5 = 12'
-    );
+SELECT 'Ako su dva trokuta sukladna, što vrijedi za njihove odgovarajuće kutove?', 'Jednaki su@ Različiti su@ Zbroj im je 180°@ Ne možemo znati', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako su dva trokuta sukladna, što vrijedi za njihove odgovarajuće kutove?');
 
--- Jedanaesti zadatak - Množenje i dijeljenje u N0 (svojstva)
+-- 6. Konstrukcije trokuta
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo opisuje: a × (b + c) = a×b + a×c?',
-    'Asocijativnost@ Komutativnost@ Distributivnost@ Neutralni element',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo opisuje: a × (b + c) = a×b + a×c?'
-    );
+SELECT 'Može li se konstruirati trokut sa stranicama 5 cm, 7 cm i 15 cm?', 'Da, uvijek@ Da, ali samo pod određenim uvjetima@ Ne, nikada@ Ovisi o kutovima', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Može li se konstruirati trokut sa stranicama 5 cm, 7 cm i 15 cm?');
 
--- Dvanaesti zadatak - Množenje i dijeljenje u N0 (problemski)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako jedna kutija sadrži 6 bombona, koliko bombona ima u 4 kutije?',
-    '6 bombona@ 10 bombona@ 24 bombona@ 46 bombona',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako jedna kutija sadrži 6 bombona, koliko bombona ima u 4 kutije?'
-    );
+SELECT 'Koliko različitih trokuta možemo konstruirati ako su zadane sve tri stranice?', '0@ 1@ 2@ Beskonačno mnogo', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko različitih trokuta možemo konstruirati ako su zadane sve tri stranice?');
 
--- Trinaesti zadatak - Množenje i dijeljenje u N0 (jednadžbe)
+-- 7. Opseg trokuta
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: x × 3 = 15',
-    'x = 3@ x = 5@ x = 12@ x = 18',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: x × 3 = 15'
-    );
+SELECT 'Koliki je opseg trokuta sa stranicama 5 cm, 7 cm i 9 cm?', '15 cm@ 21 cm@ 25 cm@ 31 cm', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliki je opseg trokuta sa stranicama 5 cm, 7 cm i 9 cm?');
 
--- Četrnaesti zadatak - Neutralni element
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je neutralni element za zbrajanje?',
-    '0@ 1@ 10@ Ne postoji',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je neutralni element za zbrajanje?'
-    );
+SELECT 'Ako je opseg jednakostraničnog trokuta 24 cm, kolika je duljina njegove stranice?', '6 cm@ 8 cm@ 12 cm@ 24 cm', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je opseg jednakostraničnog trokuta 24 cm, kolika je duljina njegove stranice?');
 
--- Petnaesti zadatak - Neutralni element
+-- 8. Površina trokuta
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je neutralni element za množenje?',
-    '0@ 1@ 10@ Ne postoji',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je neutralni element za množenje?'
-    );
+SELECT 'Kolika je površina trokuta sa osnovicom 10 cm i visinom 6 cm?', '16 cm²@ 30 cm²@ 60 cm²@ 120 cm²', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kolika je površina trokuta sa osnovicom 10 cm i visinom 6 cm?');
 
--- Šesnaesti zadatak - Brojevni pravac
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koja je točka na brojevnom pravcu između 2 i 4?',
-    '1@ 3@ 5@ 6',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koja je točka na brojevnom pravcu između 2 i 4?'
-    );
+SELECT 'Ako je površina trokuta 42 cm², a osnovica 12 cm, kolika je visina na tu osnovicu?', '3.5 cm@ 7 cm@ 14 cm@ 21 cm', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je površina trokuta 42 cm², a osnovica 12 cm, kolika je visina na tu osnovicu?');
 
--- Sedamnaesti zadatak - Zaokruživanje
+-- 9. Primjene u geometriji
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako zaokružiti 23 na najbližu deseticu?',
-    '20@ 23@ 25@ 30',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako zaokružiti 23 na najbližu deseticu?'
-    );
+SELECT 'Koliko visina ima svaki trokut?', '1@ 2@ 3@ 4', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko visina ima svaki trokut?');
 
--- Osamnaesti zadatak - Problemski zadatak
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako Ana ima 25 kuna, a Ivan 18 kuna, koliko više novaca ima Ana?',
-    '7 kuna@ 18 kuna@ 25 kuna@ 43 kune',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako Ana ima 25 kuna, a Ivan 18 kuna, koliko više novaca ima Ana?'
-    );
+SELECT 'U pravokutnom trokutu, nasuprot pravog kuta je:', 'Najkraća stranica@ Srednja stranica@ Najduža stranica (hipotenuza)@ Visina', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'U pravokutnom trokutu, nasuprot pravog kuta je:');
 
--- Devetnaesti zadatak - Problemski zadatak
+-- 10. Riječni zadaci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako u razredu ima 24 učenika podijeljenih u 3 jednake grupe, koliko učenika je u svakoj grupi?',
-    '6 učenika@ 8 učenika@ 12 učenika@ 24 učenika',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako u razredu ima 24 učenika podijeljenih u 3 jednake grupe, koliko učenika je u svakoj grupi?'
-    );
+SELECT 'Stranice jednakokračnog trokuta su 5 cm, 5 cm i 8 cm. Koliki je njegov opseg?', '13 cm@ 15 cm@ 18 cm@ 20 cm', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Stranice jednakokračnog trokuta su 5 cm');
 
--- Dvadeseti zadatak - Jednadžbe
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: x - 8 = 12',
-    'x = 4@ x = 8@ x = 12@ x = 20',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skup prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: x - 8 = 12'
-    );
+SELECT 'Pravokutni trokut ima katete 6 cm i 8 cm. Kolika je njegova površina?', '14 cm²@ 24 cm²@ 48 cm²@ 96 cm²', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Kut i trokut' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Pravokutni trokut ima katete 6 cm i 8 cm. Kolika je njegova površina?');
 
-
--- 5. razred, 3. lekcija DJELJIVOST PRIRODNIH BROJEVA
+-- Lekcija: Potencije baze 10
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Djeljivost prirodnih brojeva', 'Osnovna škola', '5'
+SELECT 'Potencije baze 10', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Djeljivost prirodnih brojeva'
+    WHERE title = 'Potencije baze 10'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- 1. Višekratnik
+-- 1. Osnovni pojmovi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je od sljedećih brojeva višekratnik broja 4?',
-    '5@ 6@ 8@ 10',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je od sljedećih brojeva višekratnik broja 4?'
-    );
+SELECT 'Kako zapisujemo broj 1000 kao potenciju baze 10?', '10¹@ 10²@ 10³@ 10⁴', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo broj 1000 kao potenciju baze 10?');
 
--- 2. Višekratnik
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je najmanji višekratnik brojeva 3 i 5?',
-    '5@ 8@ 15@ 30',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je najmanji višekratnik brojeva 3 i 5?'
-    );
+SELECT 'Što predstavlja eksponent u zapisu 10ⁿ?', 'Bazu@ Potenciju@ Broj nula u broju@ Broj ponavljanja množenja', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Što predstavlja eksponent u zapisu 10ⁿ?');
 
--- 3. Djeljitelj
+-- 2. Pretvaranje u standardni oblik
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je od sljedećih brojeva djeljitelj broja 12?',
-    '5@ 7@ 8@ 6',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je od sljedećih brojeva djeljitelj broja 12?'
-    );
+SELECT 'Kako zapisujemo 500 u obliku potencije baze 10?', '5 × 10¹@ 5 × 10²@ 5 × 10³@ 5 × 10⁴', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 500 u obliku potencije baze 10?');
 
--- 4. Djeljitelj
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko djeljitelja ima prost broj?',
-    '1@ 2@ 3@ 4',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko djeljitelja ima prost broj?'
-    );
+SELECT 'Kako zapisujemo 0.001 koristeći potenciju baze 10?', '10³@ 10⁻³@ 10⁻²@ 10⁻¹', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 0.001 koristeći potenciju baze 10?');
 
--- 5. Pravila djeljivosti (s 2)
+-- 3. Množenje potencija
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj je djeljiv s 2?',
-    '23@ 35@ 48@ 51',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj je djeljiv s 2?'
-    );
+SELECT 'Koliko je 10⁵ × 10²?', '10⁷@ 10¹⁰@ 10³@ 10²⁵', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 10⁵ × 10²?');
 
--- 6. Pravila djeljivosti (s 3)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj je djeljiv s 3?',
-    '44@ 55@ 66@ 77',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj je djeljiv s 3?'
-    );
+SELECT 'Koliko je 10³ × 10⁻²?', '10@ 10⁻⁶@ 10⁵@ 10¹', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 10³ × 10⁻²?');
 
--- 7. Pravila djeljivosti (s 5)
+-- 4. Dijeljenje potencija
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj je djeljiv s 5?',
-    '32@ 43@ 54@ 70',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj je djeljiv s 5?'
-    );
+SELECT 'Koliko je 10⁸ ÷ 10⁵?', '10³@ 10¹³@ 10⁻³@ 10⁴⁰', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 10⁸ ÷ 10⁵?');
 
--- 8. Pravila djeljivosti (s 10)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj je djeljiv s 10?',
-    '105@ 120@ 133@ 148',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj je djeljiv s 10?'
-    );
+SELECT 'Koliko je 10⁻⁴ ÷ 10²?', '10⁻⁶@ 10⁻²@ 10²@ 10⁶', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 10⁻⁴ ÷ 10²?');
 
--- 9. Prosti brojevi
+-- 5. Potenciranje potencija
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji od sljedećih brojeva je prost?',
-    '9@ 11@ 15@ 21',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji od sljedećih brojeva je prost?'
-    );
+SELECT 'Koliko je (10²)³?', '10⁵@ 10⁶@ 10⁸@ 10⁹', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (10²)³?');
 
--- 10. Složeni brojevi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji od sljedećih brojeva je složen?',
-    '2@ 3@ 4@ 5',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji od sljedećih brojeva je složen?'
-    );
+SELECT 'Koliko je (10⁻³)²?', '10⁻⁶@ 10⁻⁵@ 10⁵@ 10⁶', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (10⁻³)²?');
 
--- 11. Rastavljanje na proste faktore
+-- 6. Primjene u stvarnom svijetu
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi rastav broja 12 na proste faktore?',
-    '2×2×3@ 3×4@ 2×6@ 1×12',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi rastav broja 12 na proste faktore?'
-    );
+SELECT 'Koliko nula ima broj 100 milijuna?', '6@ 7@ 8@ 9', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko nula ima broj 100 milijuna?');
 
--- 12. Rastavljanje na proste faktore
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi rastav broja 30 na proste faktore?',
-    '2×3×5@ 5×6@ 2×15@ 1×30',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi rastav broja 30 na proste faktore?'
-    );
+SELECT 'Kako zapisujemo 3.7 milijarde u znanstvenom zapisu?', '3.7 × 10⁶@ 3.7 × 10⁷@ 3.7 × 10⁸@ 3.7 × 10⁹', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 3.7 milijarde u znanstvenom zapisu?');
 
--- 13. Najveći zajednički djeljitelj (NZD)
+-- 7. Pretvaranje između oblika
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je NZD brojeva 12 i 18?',
-    '2@ 3@ 6@ 12',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je NZD brojeva 12 i 18?'
-    );
+SELECT 'Koji je standardni oblik broja 4.2 × 10⁵?', '420@ 4,200@ 42,000@ 420,000', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je standardni oblik broja 4.2 × 10⁵?');
 
--- 14. Najmanji zajednički višekratnik (NZV)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je NZV brojeva 4 i 6?',
-    '2@ 6@ 12@ 24',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je NZV brojeva 4 i 6?'
-    );
+SELECT 'Koji je znanstveni zapis broja 0.000072?', '7.2 × 10⁻⁴@ 7.2 × 10⁻⁵@ 7.2 × 10⁻⁶@ 7.2 × 10⁻⁷', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je znanstveni zapis broja 0.000072?');
 
--- 15. Pravila djeljivosti (kombinirano)
+-- 8. Uspoređivanje veličina
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji broj je djeljiv i s 2 i s 3?',
-    '14@ 16@ 18@ 20',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji broj je djeljiv i s 2 i s 3?'
-    );
+SELECT 'Koji je broj veći: 3 × 10⁴ ili 5 × 10³?', '3 × 10⁴@ 5 × 10³@ Jednaki su@ Ovisi o kontekstu', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je broj veći: 3 × 10⁴ ili 5 × 10³?');
 
--- 16. Prosti brojevi (problemi)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko prostih brojeva postoji između 10 i 20?',
-    '2@ 3@ 4@ 5',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko prostih brojeva postoji između 10 i 20?'
-    );
+SELECT 'Koji je broj manji: 2 × 10⁻³ ili 5 × 10⁻²?', '2 × 10⁻³@ 5 × 10⁻²@ Jednaki su@ Ovisi o kontekstu', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je broj manji: 2 × 10⁻³ ili 5 × 10⁻²?');
 
--- 17. Djeljivost (problemski)
+-- 9. Kombinirane operacije
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako pakiranje sadrži 24 čokolade i želimo ih podijeliti na jednake dijelove, koliko mogućih brojeva djece (većih od 1) može dobiti jednak broj čokolada?',
-    '6@ 7@ 8@ 9',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako pakiranje sadrži 24 čokolade i želimo ih podijeliti na jednake dijelove, koliko mogućih brojeva djece (većih od 1) može dobiti jednak broj čokolada?'
-    );
+SELECT 'Koliko je (2 × 10³) × (3 × 10⁴)?', '5 × 10⁷@ 6 × 10⁷@ 5 × 10¹²@ 6 × 10¹²', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (2 × 10³) × (3 × 10⁴)?');
 
--- 18. NZD (problemski)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Marko ima 12 jabuka, a Ana 18 jabuka. Koliki je najveći broj jednakih košarica koje mogu napraviti da imaju jednak broj jabuka u svakoj?',
-    '3@ 4@ 6@ 9',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Marko ima 12 jabuka, a Ana 18 jabuka. Koliki je najveći broj jednakih košarica koje mogu napraviti da imaju jednak broj jabuka u svakoj?'
-    );
+SELECT 'Koliko je (8 × 10⁵) ÷ (2 × 10²)?', '4 × 10³@ 4 × 10⁷@ 6 × 10³@ 6 × 10⁷', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (8 × 10⁵) ÷ (2 × 10²)?');
 
--- 19. NZV (problemski)
+-- 10. Riječni zadaci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Autobus A vozi svakih 12 minuta, autobus B svakih 18 minuta. Nakon koliko će minuta opet krenuti istovremeno?',
-    '18 minuta@ 24 minute@ 36 minuta@ 72 minute',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Autobus A vozi svakih 12 minuta, autobus B svakih 18 minuta. Nakon koliko će minuta opet krenuti istovremeno?'
-    );
+SELECT 'Zemlja je udaljena od Sunca oko 150 milijuna km. Kako to zapisujemo u znanstvenom zapisu?', '1.5 × 10⁶ km@ 1.5 × 10⁷ km@ 1.5 × 10⁸ km@ 1.5 × 10⁹ km', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Zemlja je udaljena od Sunca%');
 
--- 20. Rastavljanje na proste faktore (teži)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi rastav broja 84 na proste faktore?',
-    '2×2×3×7@ 3×4×7@ 2×6×7@ 2×3×14',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Djeljivost prirodnih brojeva' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi rastav broja 84 na proste faktore?'
-    );
+SELECT 'Avion leti brzinom od 9 × 10² km/h. Koliko to iznosi u standardnom zapisu?', '90 km/h@ 900 km/h@ 9,000 km/h@ 90,000 km/h', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Potencije baze 10' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Avion leti brzinom od 9 × 10² km/h. Koliko to iznosi u standardnom zapisu?');
 
--- 5. razred, 4. lekcija SKUPOVI TOČAKA U RAVNINI
+-- Lekcija: Razlomci
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Skupovi točaka u ravnini', 'Osnovna škola', '5'
+SELECT 'Razlomci', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Skupovi točaka u ravnini'
+    WHERE title = 'Razlomci'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- 1. Simetrala dužine
+-- 1. Osnovni pojmovi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je simetrala dužine?',
-    'Pravac koji je paralelan s dužinom@ Pravac koji dijeli dužinu na dva jednaka dijela@ Pravac koji je okomit na dužinu@ Pravac koji prolazi samo jednim krajem dužine',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je simetrala dužine?'
-    );
+SELECT 'Što predstavlja nazivnik u razlomku?', 'Broj dijelova cjeline@ Ukupan broj dijelova@ Vrijednost razlomka@ Broj ispred razlomka', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Što predstavlja nazivnik u razlomku?');
 
--- 2. Simetrala dužine (svojstva)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo ima simetrala dužine?',
-    'Prolazi kroz jednu točku dužine@ Dijeli dužinu na dva nejednaka dijela@ Sjecište simetrale i dužine je polovište dužine@ Nije okomita na dužinu',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo ima simetrala dužine?'
-    );
+SELECT 'Koji decimalni broj odgovara razlomku 3/4?', '0.25@ 0.34@ 0.5@ 0.75', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji decimalni broj odgovara razlomku 3/4?');
 
--- 3. Susjedni kutovi
+-- 2. Vrste razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što su susjedni kutovi?',
-    'Kutovi koji imaju zajednički vrh i jednu zajedničku krak@ Kutovi koji su jednaki@ Kutovi čiji je zbroj 180°@ Kutovi koji nemaju zajedničkih karaka',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što su susjedni kutovi?'
-    );
+SELECT 'Kako nazivamo razlomak čija je vrijednost veća od 1?', 'Pravi razlomak@ Nepravi razlomak@ Mješoviti broj@ Decimalni razlomak', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako nazivamo razlomak čija je vrijednost veća od 1?');
 
--- 4. Vrsni kutovi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što su vrsni kutovi?',
-    'Kutovi koji imaju zajednički vrh@ Kutovi nastali presjekom dvaju pravaca i suprotni su@ Kutovi čiji je zbroj 90°@ Kutovi koji su susjedni',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što su vrsni kutovi?'
-    );
+SELECT 'Kako zapisujemo 2 1/3 kao nepravi razlomak?', '1/3@ 3/7@ 7/3@ 5/3', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 2 1/3 kao nepravi razlomak?');
 
--- 5. Trokut
+-- 3. Skraćivanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko stranica ima trokut?',
-    '2@ 3@ 4@ 5',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko stranica ima trokut?'
-    );
+SELECT 'Kako glasi skraćeni oblik razlomka 12/18?', '6/9@ 4/6@ 2/3@ 1/2', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako glasi skraćeni oblik razlomka 12/18?');
 
--- 6. Trokut (vrste)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako se zove trokut kojemu su sve stranice jednake?',
-    'Jednakokračan@ Jednakostraničan@ Pravokutan@ Tupokutan',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako se zove trokut kojemu su sve stranice jednake?'
-    );
+SELECT 'Koji je najveći zajednički djelitelj brojeva 24 i 36?', '6@ 8@ 12@ 24', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je najveći zajednički djelitelj brojeva 24 i 36?');
 
--- 7. Pravokutnik
+-- 4. Proširivanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo ima pravokutnik?',
-    'Sve stranice su mu jednake@ Susjedne stranice su mu okomite@ Nema prave kutove@ Dijagonale su mu nejednake',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo ima pravokutnik?'
-    );
+SELECT 'Kako glasi prošireni oblik razlomka 2/5 s nazivnikom 15?', '4/15@ 6/15@ 10/15@ 12/15', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako glasi prošireni oblik razlomka 2/5 s nazivnikom 15?');
 
--- 8. Kvadrat
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako se zove četverokut kojemu su sve stranice jednake i svi kutovi pravi?',
-    'Pravokutnik@ Romb@ Trapez@ Kvadrat',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako se zove četverokut kojemu su sve stranice jednake i svi kutovi pravi?'
-    );
+SELECT 'Ako proširimo razlomak 3/7 s brojem 4, koliki ćemo dobiti razlomak?', '7/11@ 12/28@ 3/28@ 12/7', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako proširimo razlomak 3/7 s brojem 4, koliki ćemo dobiti razlomak?');
 
--- 9. Krug i kružnica
+-- 5. Uspoređivanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je kružnica?',
-    'Skup svih točaka u ravnini jednako udaljenih od središta@ Dio kruga@ Unutrašnjost kruga@ Samo rub kruga',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je kružnica?'
-    );
+SELECT 'Koji je od ovih razlomaka najveći: 1/2, 2/3, 3/4, 5/6?', '1/2@ 2/3@ 3/4@ 5/6', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Koji je od ovih razlomaka najveći%');
 
--- 10. Krug i kružnica (elementi)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako se zove dužina koja spaja središte kružnice s bilo kojom točkom na kružnici?',
-    'Promjer@ Tetiva@ Polumjer@ Luk',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako se zove dužina koja spaja središte kružnice s bilo kojom točkom na kružnici?'
-    );
+SELECT 'Usporedi razlomke 3/5 i 2/3:', '3/5 > 2/3@ 3/5 < 2/3@ 3/5 = 2/3@ Nije moguće usporediti', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Usporedi razlomke 3/5 i 2/3:');
 
--- 11. Simetrala dužine (konstrukcija)
+-- 6. Pretvaranje u decimalni oblik
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je potrebno za konstrukciju simetrale dužine?',
-    'Kutomjer i ravnalo@ Šestar i ravnalo@ Samo kutomjer@ Samo ravnalo',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je potrebno za konstrukciju simetrale dužine?'
-    );
+SELECT 'Koji decimalni broj odgovara razlomku 1/8?', '0.125@ 0.25@ 0.375@ 0.5', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji decimalni broj odgovara razlomku 1/8?');
 
--- 12. Susjedni kutovi (svojstva)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je zbroj susjednih kutova?',
-    '90°@ 180°@ 270°@ 360°',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je zbroj susjednih kutova?'
-    );
+SELECT 'Kako zapisujemo 0.6 kao razlomak u najjednostavnijem obliku?', '6/10@ 3/5@ 2/3@ 60/100', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 0.6 kao razlomak u najjednostavnijem obliku?');
 
--- 13. Vrsni kutovi (svojstva)
+-- 7. Recipročni razlomci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo imaju vrsni kutovi?',
-    'Zbroj im je 180°@ Međusobno su jednaki@ Zbroj im je 90°@ Nemaju zajednički vrh',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo imaju vrsni kutovi?'
-    );
+SELECT 'Koji je recipročni vrijednost razlomka 5/7?', '7/5@ 5/7@ -5/7@ -7/5', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je recipročni vrijednost razlomka 5/7?');
 
--- 14. Trokut (kutovi)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je zbroj kutova u trokutu?',
-    '90°@ 180°@ 270°@ 360°',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je zbroj kutova u trokutu?'
-    );
+SELECT 'Koliko iznosi umnožak razlomka i njegove recipročne vrijednosti?', '0@ 1@ -1@ Ovisi o razlomku', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko iznosi umnožak razlomka i njegove recipročne vrijednosti?');
 
--- 15. Pravokutnik (dijagonale)
+-- 8. Riječni zadaci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo imaju dijagonale pravokutnika?',
-    'Jednake su i raspolavljaju se@ Nejendake su@ Okomite su@ Paralelne su',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo imaju dijagonale pravokutnika?'
-    );
+SELECT 'Marko je pojeo 3/8 pizze, a Ana 1/2 pizze. Tko je pojeo više?', 'Marko@ Ana@ Jednako@ Nije moguće odrediti', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Marko je pojeo 3/8 pizze%');
 
--- 16. Kvadrat (svojstva)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koje svojstvo nema kvadrat?',
-    'Sve stranice su jednake@ Svi kutovi su pravi@ Dijagonale su mu nejednake@ Dijagonale se raspolavljaju',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koje svojstvo nema kvadrat?'
-    );
+SELECT 'U razredu od 24 učenika, 5/8 su djevojčice. Koliko je djevojčica u razredu?', '8@ 12@ 15@ 20', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'U razredu od 24 učenika, 5/8 su djevojčice. Koliko je djevojčica u razredu?');
 
--- 17. Krug i kružnica (promjer)
+-- 9. Kombinirane operacije
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko polumjera čini promjer kružnice?',
-    '1@ 2@ 3@ 4',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko polumjera čini promjer kružnice?'
-    );
+SELECT 'Koji je rezultat izraza 1/2 + 1/3?', '2/5@ 5/6@ 3/5@ 1/6', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je rezultat izraza 1/2 + 1/3?');
 
--- 18. Konstrukcije (trokut)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što je dovoljno za konstrukciju trokuta?',
-    'Duljine dviju stranica@ Duljine sve tri stranice@ Samo jedan kut@ Samo dva kuta',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što je dovoljno za konstrukciju trokuta?'
-    );
+SELECT 'Koliko je 3/4 × 2/9?', '1/6@ 5/13@ 6/36@ 5/36', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Razlomci' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 3/4 × 2/9?');
 
--- 19. Kutovi (problemski)
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako su dva kuta susjedna i jedan je 45°, koliki je drugi?',
-    '45°@ 90°@ 135°@ 180°',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako su dva kuta susjedna i jedan je 45°, koliki je drugi?'
-    );
-
--- 20. Geometrijski likovi (prepoznavanje)
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji lik ima sve stranice jednake, sve kutove prave, a dijagonale mu se raspolavljaju?',
-    'Pravokutnik@ Romb@ Trapez@ Kvadrat',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Skupovi točaka u ravnini' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji lik ima sve stranice jednake, sve kutove prave, a dijagonale mu se raspolavljaju?'
-    );
-
--- 5. razred, 5. lekcija RAZLOMCI I DECIMALNI BROJEVI
+-- Lekcija: Računanje s razlomcima
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Razlomci i decimalni brojevi', 'Osnovna škola', '5'
+SELECT 'Računanje s razlomcima', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Razlomci i decimalni brojevi'
+    WHERE title = 'Računanje s razlomcima'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- 1. Pojam razlomka
+-- 1. Zbrajanje s istim nazivnikom
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Što prikazuje nazivnik razlomka?',
-    'Na koliko dijelova cijela stvar podijeljena@ Koliko dijelova uzimamo@ Vrijednost razlomka@ Zbroj dijelova',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Što prikazuje nazivnik razlomka?'
-    );
+SELECT 'Koliko je 3/7 + 2/7?', '5/7@ 5/14@ 1@ 6/7', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 3/7 + 2/7?');
 
--- 2. Prikazivanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi razlomak za osjenčani dio ako je cijeli krug podijeljen na 8 jednakih dijelova, a osjenčano je 3 dijela?',
-    '5/8@ 3/8@ 8/3@ 3/5',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi razlomak za osjenčani dio ako je cijeli krug podijeljen na 8 jednakih dijelova, a osjenčano je 3 dijela?'
-    );
+SELECT 'Koliko je 5/12 + 1/12 + 3/12?', '9/12@ 9/36@ 3/4@ 1/4', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 5/12 + 1/12 + 3/12?');
 
--- 3. Razlomci na brojevnom pravcu
+-- 2. Zbrajanje s različitim nazivnicima
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Gdje se na brojevnom pravcu nalazi točka 1/2?',
-    'Između 0 i 1@ Između 1 i 2@ Između 2 i 3@ Na 0',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Gdje se na brojevnom pravcu nalazi točka 1/2?'
-    );
+SELECT 'Koliko je 1/3 + 1/6?', '1/9@ 1/2@ 2/9@ 2/3', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 1/3 + 1/6?');
 
--- 4. Nepravi razlomci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji od navedenih je nepravi razlomak?',
-    '1/2@ 3/4@ 5/4@ 2/3',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji od navedenih je nepravi razlomak?'
-    );
+SELECT 'Koliko je 2/5 + 3/10?', '5/15@ 7/10@ 1/2@ 6/15', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 2/5 + 3/10?');
 
--- 5. Mješoviti brojevi
+-- 3. Oduzimanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi mješoviti broj za razlomak 7/3?',
-    '3 1/3@ 2 1/3@ 7 3/1@ 1 3/7',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi mješoviti broj za razlomak 7/3?'
-    );
+SELECT 'Koliko je 7/8 - 3/8?', '4/0@ 1/2@ 4/8@ 10/8', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 7/8 - 3/8?');
 
--- 6. Pretvaranje u decimalni broj
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi decimalni zapis za razlomak 1/4?',
-    '0.1@ 0.25@ 0.5@ 0.75',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi decimalni zapis za razlomak 1/4?'
-    );
+SELECT 'Koliko je 3/4 - 1/3?', '2/1@ 5/12@ 2/7@ 4/7', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 3/4 - 1/3?');
 
--- 7. Decimalni brojevi na brojevnom pravcu
+-- 4. Množenje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Gdje se na brojevnom pravcu nalazi 1.5?',
-    'Između 0 i 1@ Između 1 i 2@ Točno na 1@ Točno na 2',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Gdje se na brojevnom pravcu nalazi 1.5?'
-    );
+SELECT 'Koliko je 2/3 × 3/4?', '6/12@ 1/2@ 5/7@ 6/7', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 2/3 × 3/4?');
 
--- 8. Uspoređivanje decimalnih brojeva
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je broj veći: 0.35 ili 0.4?',
-    '0.35@ 0.4@ Jednaki su@ Ne može se odrediti',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je broj veći: 0.35 ili 0.4?'
-    );
+SELECT 'Koliko je 5 × 1/4?', '1/20@ 5/4@ 4/5@ 20', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 5 × 1/4?');
 
--- 9. Zaokruživanje decimalnih brojeva
+-- 5. Dijeljenje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako zaokružiti 3.78 na jednu decimalu?',
-    '3.7@ 3.8@ 3.0@ 4.0',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako zaokružiti 3.78 na jednu decimalu?'
-    );
+SELECT 'Koliko je 3/4 ÷ 2/5?', '6/20@ 15/8@ 8/15@ 5/6', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 3/4 ÷ 2/5?');
 
--- 10. Pretvaranje decimalnog u razlomak
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi razlomak za 0.6?',
-    '1/6@ 3/5@ 6/1@ 6/10',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi razlomak za 0.6?'
-    );
+SELECT 'Koliko je 6 ÷ 1/3?', '2@ 3@ 18@ 1/18', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 6 ÷ 1/3?');
 
--- 11. Ekvivalentni razlomci
+-- 6. Kombinirane operacije
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je razlomak ekvivalentan s 2/3?',
-    '4/6@ 3/2@ 1/3@ 2/6',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je razlomak ekvivalentan s 2/3?'
-    );
+SELECT 'Koliko je (1/2 + 1/4) × 2/3?', '1/2@ 3/4@ 1/3@ 2/3', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (1/2 + 1/4) × 2/3?');
 
--- 12. Skraćivanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi skraćeni oblik razlomka 8/12?',
-    '4/6@ 2/3@ 1/2@ 8/12',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi skraćeni oblik razlomka 8/12?'
-    );
+SELECT 'Koliko je (3/4 - 1/2) ÷ (1/8 + 1/4)?', '1/3@ 2/3@ 1@ 4/3', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je (3/4 - 1/2) ÷ (1/8 + 1/4)?');
 
--- 13. Uspoređivanje razlomaka
+-- 7. Postoci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koji je razlomak veći: 3/4 ili 2/3?',
-    '3/4@ 2/3@ Jednaki su@ Ovisi o situaciji',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koji je razlomak veći: 3/4 ili 2/3?'
-    );
+SELECT 'Kako zapisujemo 25% kao razlomak u najjednostavnijem obliku?', '25/100@ 1/4@ 2/5@ 1/25', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo 25% kao razlomak u najjednostavnijem obliku?');
 
--- 14. Zbrajanje razlomaka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 1/2 + 1/4?',
-    '1/6@ 2/6@ 3/4@ 5/4',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 1/2 + 1/4?'
-    );
+SELECT 'Koliko je 20% od 150?', '15@ 20@ 30@ 75', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko je 20% od 150?');
 
--- 15. Oduzimanje razlomaka
+-- 8. Riječni zadaci
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 3/4 - 1/4?',
-    '1/4@ 1/2@ 2/4@ 2/0',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 3/4 - 1/4?'
-    );
+SELECT 'Ana je pročitala 1/4 knjige prvog dana i 1/3 knjige drugog dana. Koliki dio knjige je pročitala u dva dana?', '2/7@ 5/12@ 7/12@ 2/12', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Ana je pročitala 1/4 knjige%');
 
--- 16. Uspoređivanje decimala (teže)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Poredaj brojeve od najmanjeg do najvećeg: 0.3, 0.29, 0.305',
-    '0.29, 0.3, 0.305@ 0.3, 0.29, 0.305@ 0.305, 0.3, 0.29@ 0.29, 0.305, 0.3',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Poredaj brojeve od najmanjeg do najvećeg: 0.3, 0.29, 0.305'
-    );
+SELECT 'U vrtu je 3/8 površine posađeno rajčicama, a 1/6 paprika. Koji je dio vrta posađen povrćem?', '4/14@ 13/24@ 1/2@ 5/24', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'U vrtu je 3/8 površine posađeno rajčicama, a 1/6 paprika. Koji je dio vrta posađen povrćem?');
 
--- 17. Zaokruživanje na cijele brojeve
+-- 9. Primjene u stvarnom životu
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako zaokružiti 4.67 na cijeli broj?',
-    '4@ 4.6@ 5@ 4.7',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako zaokružiti 4.67 na cijeli broj?'
-    );
+SELECT 'Ako je 30% učenika u razredu djevojčice, a u razredu ima 20 učenika, koliko je djevojčica?', '6@ 10@ 12@ 15', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je 30% učenika u razredu djevojčice, a u razredu ima 20 učenika, koliko je djevojčica?');
 
--- 18. Problemski zadatak (razlomci)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako Ana poje 1/4 pizze, a Marko 1/3 pizze, koliko pizze su pojeli zajedno?',
-    '1/7@ 2/7@ 7/12@ 1/12',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako Ana poje 1/4 pizze, a Marko 1/3 pizze, koliko pizze su pojeli zajedno?'
-    );
+SELECT 'Cijena majice je smanjena za 1/5 iznosa. Ako je originalna cijena bila 200 kn, kolika je nova cijena?', '40 kn@ 160 kn@ 180 kn@ 240 kn', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Računanje s razlomcima' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Cijena majice je smanjena za 1/5%');
 
--- 19. Problemski zadatak (decimalni)
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je cijena robe 12.99 kn, koliko će koštati zaokruženo na najbližu kunu?',
-    '12 kn@ 13 kn@ 12.9 kn@ 13.0 kn',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je cijena robe 12.99 kn, koliko će koštati zaokruženo na najbližu kunu?'
-    );
 
--- 20. Mješoviti brojevi (pretvaranje)
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kako glasi nepravi razlomak za 2 1/2?',
-    '3/2@ 5/2@ 1/2@ 2/2',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Razlomci i decimalni brojevi' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kako glasi nepravi razlomak za 2 1/2?'
-    );
-
--- 5. razred, 6. lekcija RAČUNANJE S DECIMALNIM BROJEVIMA
+-- Lekcija: Koordinatni sustav i prikazivanje podataka
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Računanje s decimalnim brojevima', 'Osnovna škola', '5'
+SELECT 'Koordinatni sustav i prikazivanje podataka', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Računanje s decimalnim brojevima'
+    WHERE title = 'Koordinatni sustav i prikazivanje podataka'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- 1. Zbrajanje decimalnih brojeva
+-- 1. Razlomci na brojevnom pravcu
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 2.5 + 1.3?',
-    '3.8@ 3.6@ 3.2@ 3.0',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 2.5 + 1.3?'
-    );
+SELECT 'Na kojem mjestu se nalazi razlomak 3/4 na brojevnom pravcu?', 'Ispred 0@ Ispred 1/2@ Ispred 1@ Točno na 1', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Na kojem mjestu se nalazi razlomak 3/4 na brojevnom pravcu?');
 
--- 2. Oduzimanje decimalnih brojeva
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 5.7 - 2.4?',
-    '3.3@ 3.5@ 3.7@ 2.3',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 5.7 - 2.4?'
-    );
+SELECT 'Koji razlomak se nalazi između 1/2 i 1 na brojevnom pravcu?', '1/4@ 2/4@ 3/4@ 5/5', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji razlomak se nalazi između 1/2 i 1 na brojevnom pravcu?');
 
--- 3. Množenje decimalnih brojeva
+-- 2. Uređeni parovi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 0.5 × 4?',
-    '0.2@ 2.0@ 20@ 0.02',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 0.5 × 4?'
-    );
+SELECT 'Koji je prvi broj u uređenom paru (2, 5)?', '2@ 5@ 7@ 0', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je prvi broj u uređenom paru (2, 5)?');
 
--- 4. Dijeljenje decimalnog broja prirodnim brojem
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 6.4 ÷ 2?',
-    '3.2@ 3.0@ 3.4@ 2.4',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 6.4 ÷ 2?'
-    );
+SELECT 'Što označava drugi broj u uređenom paru (x, y)?', 'Položaj na x-osi@ Broj točaka@ Položaj na y-osi@ Zbroj x i y', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Što označava drugi broj u uređenom paru (x, y)?');
 
--- 5. Dijeljenje decimalnog broja decimalnim brojem
+-- 3. Pravokutni koordinatni sustav u ravnini
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 1.5 ÷ 0.5?',
-    '0.3@ 3@ 30@ 0.03',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 1.5 ÷ 0.5?'
-    );
+SELECT 'Kako se zove točka (0, 0) u koordinatnom sustavu?', 'Ishodište@ Središte kruga@ Točka A@ Os x', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako se zove točka (0, 0) u koordinatnom sustavu?');
 
--- 6. Algebarski izrazi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 3x + 2x ako je x = 0.5?',
-    '1.5@ 2.0@ 2.5@ 3.0',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 3x + 2x ako je x = 0.5?'
-    );
+SELECT 'Koji je položaj točke (3, 2)?', '3 gore, 2 lijevo@ 3 desno, 2 gore@ 3 dolje, 2 desno@ 2 desno, 3 gore', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je položaj točke (3, 2)?');
 
--- 7. Linearne jednadžbe
+-- 4. Prikazivanje i interpretacija podataka
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: x + 2.5 = 4',
-    '1.5@ 2.5@ 6.5@ 1.0',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: x + 2.5 = 4'
-    );
+SELECT 'Na stupčastom dijagramu je prikazano koliko knjiga su učenici pročitali. Ako je stupac za Luku na 6, koliko je knjiga pročitao?', '3@ 5@ 6@ 8', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text LIKE 'Na stupčastom dijagramu je prikazano%Luka%');
 
--- 8. Problemski zadatak (zbrajanje)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ana je kupila 1.5 kg jabuka i 2.3 kg krušaka. Koliko voća je kupila ukupno?',
-    '3.8 kg@ 3.6 kg@ 3.2 kg@ 4.0 kg',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ana je kupila 1.5 kg jabuka i 2.3 kg krušaka. Koliko voća je kupila ukupno?'
-    );
+SELECT 'Ako je na kružnom diagramu označeno da je 1/2 kolača pojedeno, koliko je preostalo?', '1/4@ 2/4@ 1/2@ 3/4', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je na kružnom diagramu označeno da je 1/2 kolača pojedeno, koliko je preostalo?');
 
--- 9. Problemski zadatak (oduzimanje)
+-- 5. Razlomci na brojevnom pravcu (nastavak)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Marko je imao 10.5 kn, potrošio je 3.8 kn. Koliko mu je novca ostalo?',
-    '6.7 kn@ 6.5 kn@ 7.3 kn@ 7.7 kn',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Marko je imao 10.5 kn, potrošio je 3.8 kn. Koliko mu je novca ostalo?'
-    );
+SELECT 'Koji razlomak se nalazi na polovici između 0 i 1?', '1/4@ 2/4@ 3/4@ 1/2', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji razlomak se nalazi na polovici između 0 i 1?');
 
--- 10. Problemski zadatak (množenje)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je cijena jednog soka 4.5 kn, koliko koštaju 3 soka?',
-    '12.5 kn@ 13.5 kn@ 12.0 kn@ 13.0 kn',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je cijena jednog soka 4.5 kn, koliko koštaju 3 soka?'
-    );
+SELECT 'Koji je razlomak točno na sredini između 1/2 i 3/4?', '5/8@ 2/3@ 3/8@ 1/4', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je razlomak točno na sredini između 1/2 i 3/4?');
 
--- 11. Problemski zadatak (dijeljenje)
+-- 6. Uređeni parovi (nastavak)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je 6.3 m užeta podijeljeno na 3 jednaka dijela, koliko je dug svaki dio?',
-    '2.1 m@ 2.3 m@ 1.9 m@ 2.5 m',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je 6.3 m užeta podijeljeno na 3 jednaka dijela, koliko je dug svaki dio?'
-    );
+SELECT 'Koji je uređeni par ako je x = 4, a y = -2?', '(4,2)@ (4,-2)@ (-4,2)@ (-4,-2)', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji je uređeni par ako je x = 4, a y = -2?');
 
--- 12. Algebarski izrazi (složeniji)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 2x + 3y ako je x = 1.2 i y = 0.8?',
-    '4.0@ 4.8@ 5.2@ 5.6',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 2x + 3y ako je x = 1.2 i y = 0.8?'
-    );
+SELECT 'Točka (0, 5) nalazi se na kojoj osi?', 'Na x-osi@ Na y-osi@ U ishodištu@ Nema osi', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Točka (0, 5) nalazi se na kojoj osi?');
 
--- 13. Linearne jednadžbe (s decimalima)
+-- 7. Pravokutni koordinatni sustav (nastavak)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: 2x - 1.5 = 2.5',
-    'x = 1@ x = 1.5@ x = 2@ x = 2.5',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: 2x - 1.5 = 2.5'
-    );
+SELECT 'Koji kvadrant sadrži točku (−3, 4)?', 'I. kvadrant@ II. kvadrant@ III. kvadrant@ IV. kvadrant', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji kvadrant sadrži točku (−3, 4)?');
 
--- 14. Zbrajanje (više decimala)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 3.25 + 1.75 + 0.5?',
-    '5.0@ 5.5@ 6.0@ 6.5',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 3.25 + 1.75 + 0.5?'
-    );
+SELECT 'Točka (x, 0) uvijek se nalazi na kojoj osi?', 'y-osi@ x-osi@ Nema osi@ Dijagonali', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Točka (x, 0) uvijek se nalazi na kojoj osi?');
 
--- 15. Oduzimanje (više decimala)
+-- 8. Prikazivanje i interpretacija podataka (nastavak)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 10.00 - 2.35 - 3.15?',
-    '4.5@ 4.6@ 5.0@ 5.5',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 10.00 - 2.35 - 3.15?'
-    );
+SELECT 'Na grafikonu je prikazano da je broj prodanih ulaznica rastao linearno. Koji oblik ima linija?', 'Zakrivljen@ Valovit@ Ravna@ Kružna', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Na grafikonu je prikazano da je broj prodanih ulaznica rastao linearno. Koji oblik ima linija?');
 
--- 16. Množenje (više decimala)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 1.5 × 2.5?',
-    '3.0@ 3.5@ 3.75@ 4.0',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 1.5 × 2.5?'
-    );
+SELECT 'U kružnom dijagramu 1/3 dijela je označeno kao vrijeme provedeno u školi. Koliki dio dana je to?', '4 sata@ 6 sati@ 8 sati@ 12 sati', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'U kružnom dijagramu 1/3 dijela je označeno kao vrijeme provedeno u školi. Koliki dio dana je to?');
 
--- 17. Dijeljenje (više decimala)
+-- 9. Svakodnevne situacije s koordinatama i podacima
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 4.8 ÷ 1.2?',
-    '3@ 4@ 5@ 6',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 4.8 ÷ 1.2?'
-    );
+SELECT 'Marko se nalazi na točki (3, 0). Kuda se mora pomaknuti da dođe do (3, 4)?', '4 lijevo@ 4 dolje@ 4 gore@ 3 desno', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Marko se nalazi na točki (3, 0). Kuda se mora pomaknuti da dođe do (3, 4)?');
 
--- 18. Algebarski izrazi (s zagradama)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 2(x + 1.5) ako je x = 0.5?',
-    '3@ 4@ 5@ 6',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 2(x + 1.5) ako je x = 0.5?'
-    );
+SELECT 'Ako je temperatura u 8h bila 2°C, a u 12h 10°C, koliki je prosječan porast po satu?', '1°C@ 2°C@ 3°C@ 4°C', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je temperatura u 8h bila 2°C, a u 12h 10°C, koliki je prosječan porast po satu?');
 
--- 19. Linearne jednadžbe (s decimalima)
+-- 10. Kombinirano
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Riješi jednadžbu: 0.5x + 1 = 2.5',
-    'x = 1@ x = 2@ x = 3@ x = 4',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Riješi jednadžbu: 0.5x + 1 = 2.5'
-    );
+SELECT 'Točka A ima koordinate (1/2, 1). Gdje se nalazi?', 'Ispod x-osi@ U prvom kvadrantu@ Na y-osi@ Na ishodištu', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Točka A ima koordinate (1/2, 1). Gdje se nalazi?');
 
--- 20. Problemski zadatak (kombinirano)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je cijena knjige 45.99 kn, a popust je 15%, koliko košta knjiga nakon popusta? (zaokruženo na najbližu kunu)',
-    '38 kn@ 39 kn@ 40 kn@ 41 kn',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Računanje s decimalnim brojevima' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je cijena knjige 45.99 kn, a popust je 15%, koliko košta knjiga nakon popusta? (zaokruženo na najbližu kunu)'
-    );
+SELECT 'Koordinate točke B su (−1, −3). U kojem se kvadrantu nalazi?', 'I.@ II.@ III.@ IV.', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Koordinatni sustav i prikazivanje podataka' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koordinate točke B su (−1, −3). U kojem se kvadrantu nalazi?');
 
--- 5. razred, 7. lekcija GEOMETRIJSKI LIKOVI I TIJELA
+
+--Lekcija: Linearne jednadžbe s jednom nepoznanicom
 INSERT INTO public.lection (title, school_level, grade)
-SELECT 'Geometrijski likovi i tijela', 'Osnovna škola', '5'
+SELECT 'Linearne jednadžbe s jednom nepoznanicom', 'Osnovna škola', '6'
     WHERE NOT EXISTS (
     SELECT 1 FROM public.lection
-    WHERE title = 'Geometrijski likovi i tijela'
+    WHERE title = 'Linearne jednadžbe s jednom nepoznanicom'
     AND school_level = 'Osnovna škola'
-    AND grade = '5'
+    AND grade = '6'
 );
 
--- 1. Pretvaranje mjernih jedinica (duljina)
+-- 1–5: Algebarski izrazi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je centimetara u 3.5 metra?',
-    '35 cm@ 350 cm@ 3500 cm@ 0.35 cm',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je centimetara u 3.5 metra?'
-    );
+SELECT 'Koji izraz predstavlja zbroj broja x i 5?', 'x + 5@ x − 5@ 5x@ x ÷ 5', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji izraz predstavlja zbroj broja x i 5?');
 
--- 2. Pretvaranje mjernih jedinica (masa)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je grama u 2.3 kilograma?',
-    '23 g@ 230 g@ 2300 g@ 23000 g',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je grama u 2.3 kilograma?'
-    );
+SELECT 'Kako zapisujemo izraz: proizvod broja x i 3?', 'x + 3@ x − 3@ 3x@ x ÷ 3', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako zapisujemo izraz: proizvod broja x i 3?');
 
--- 3. Opseg kvadrata
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je opseg kvadrata sa stranicom 5 cm?',
-    '10 cm@ 15 cm@ 20 cm@ 25 cm',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je opseg kvadrata sa stranicom 5 cm?'
-    );
+SELECT 'Što predstavlja izraz 2(x + 3)?', '2 puta x, pa +3@ 2 puta zbroj x i 3@ zbroj 2 i x, pa +3@ 2 + x + 3', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Što predstavlja izraz 2(x + 3)?');
 
--- 4. Opseg pravokutnika
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je opseg pravokutnika sa stranicama 6 cm i 4 cm?',
-    '10 cm@ 20 cm@ 24 cm@ 36 cm',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je opseg pravokutnika sa stranicama 6 cm i 4 cm?'
-    );
+SELECT 'Koji izraz je pojednostavljen oblik izraza: 5x − 2x + 4?', '7x + 4@ 3x + 4@ 5x + 4@ 3x − 4', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji izraz je pojednostavljen oblik izraza: 5x − 2x + 4?');
 
--- 5. Opseg trokuta
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je opseg trokuta sa stranicama 5 cm, 7 cm i 9 cm?',
-    '15 cm@ 21 cm@ 25 cm@ 35 cm',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je opseg trokuta sa stranicama 5 cm, 7 cm i 9 cm?'
-    );
+SELECT 'Koji izraz odgovara izrazu: "četiri puta broj, umanjeno za 7"?', '4x + 7@ 4x − 7@ x − 7@ 7x − 4', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji izraz odgovara izrazu: "četiri puta broj, umanjeno za 7"?');
 
--- 6. Površina kvadrata
+-- 6–12: Rješavanje linearnih jednadžbi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kolika je površina kvadrata sa stranicom 6 cm?',
-    '12 cm²@ 24 cm²@ 36 cm²@ 48 cm²',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kolika je površina kvadrata sa stranicom 6 cm?'
-    );
+SELECT 'Riješi jednadžbu: x + 5 = 12', '5@ 7@ 17@ −7', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Riješi jednadžbu: x + 5 = 12');
 
--- 7. Površina pravokutnika
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kolika je površina pravokutnika sa stranicama 8 cm i 5 cm?',
-    '13 cm²@ 26 cm²@ 40 cm²@ 80 cm²',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kolika je površina pravokutnika sa stranicama 8 cm i 5 cm?'
-    );
+SELECT 'Riješi jednadžbu: 3x = 15', '5@ 3@ 45@ 12', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Riješi jednadžbu: 3x = 15');
 
--- 8. Volumen kocke
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je volumen kocke s bridom 3 cm?',
-    '9 cm³@ 18 cm³@ 27 cm³@ 36 cm³',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je volumen kocke s bridom 3 cm?'
-    );
+SELECT 'Riješi jednadžbu: 2x − 4 = 10', '6@ 7@ 8@ 10', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Riješi jednadžbu: 2x − 4 = 10');
 
--- 9. Volumen kvadra
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je volumen kvadra s dimenzijama 4 cm, 5 cm i 6 cm?',
-    '15 cm³@ 60 cm³@ 120 cm³@ 240 cm³',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je volumen kvadra s dimenzijama 4 cm, 5 cm i 6 cm?'
-    );
+SELECT 'Koja je vrijednost x u jednadžbi: 5x + 3 = 18?', '2@ 3@ 4@ 5', 3,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koja je vrijednost x u jednadžbi: 5x + 3 = 18?');
 
--- 10. Pretvaranje jedinica (površina)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je kvadratnih centimetara u 1 m²?',
-    '10 cm²@ 100 cm²@ 1000 cm²@ 10000 cm²',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je kvadratnih centimetara u 1 m²?'
-    );
+SELECT 'Riješi jednadžbu: x/2 = 6', '12@ 3@ 8@ 10', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Riješi jednadžbu: x/2 = 6');
 
--- 11. Problemski zadatak (opseg)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je opseg kvadrata 24 cm, kolika je duljina njegove stranice?',
-    '4 cm@ 6 cm@ 8 cm@ 12 cm',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je opseg kvadrata 24 cm, kolika je duljina njegove stranice?'
-    );
+SELECT 'Koliko iznosi x u: 7 − x = 2?', '5@ −5@ 3@ −3', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliko iznosi x u: 7 − x = 2?');
 
--- 12. Problemski zadatak (površina)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kolika je površina pravokutnika ako su mu stranice 12 cm i 0.5 m?',
-    '60 cm²@ 120 cm²@ 600 cm²@ 1200 cm²',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kolika je površina pravokutnika ako su mu stranice 12 cm i 0.5 m?'
-    );
+SELECT 'Riješi jednadžbu: 4x + 2 = 2x + 10', 'x = 2@ x = 4@ x = −2@ x = 6', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Riješi jednadžbu: 4x + 2 = 2x + 10');
 
--- 13. Problemski zadatak (volumen)
+-- 13–20: Primjena jednadžbi
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je volumen kocke 64 cm³, koliki je njen brid?',
-    '2 cm@ 4 cm@ 6 cm@ 8 cm',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je volumen kocke 64 cm³, koliki je njen brid?'
-    );
+SELECT 'Ana i Marko zajedno imaju 30 kuna. Ana ima x kuna, a Marko ima 2x. Koliko ima Marko?', '10@ 15@ 20@ 5', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ana i Marko zajedno imaju 30 kuna. Ana ima x kuna, a Marko ima 2x. Koliko ima Marko?');
 
--- 14. Pretvaranje jedinica (volumen)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je cm³ u 1 dm³?',
-    '10 cm³@ 100 cm³@ 1000 cm³@ 10000 cm³',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je cm³ u 1 dm³?'
-    );
+SELECT 'Cijena čokolade je 3 kune više od cijene bombona. Bombon košta x kuna. Čokolada košta?', 'x + 3@ x − 3@ 3x@ x ÷ 3', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Cijena čokolade je 3 kune više od cijene bombona. Bombon košta x kuna. Čokolada košta?');
 
--- 15. Problemski zadatak (kombinirano)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko kocki brida 2 cm stane u kutiju oblika kvadra dimenzija 10 cm × 8 cm × 6 cm?',
-    '30@ 60@ 90@ 120',
-    1,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko kocki brida 2 cm stane u kutiju oblika kvadra dimenzija 10 cm × 8 cm × 6 cm?'
-    );
+SELECT 'Za film i kokice potrošeno je ukupno 60 kn. Film je koštao 40 kn, koliko su koštale kokice?', 'x = 20@ x = 30@ x = 10@ x = 60', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Za film i kokice potrošeno je ukupno 60 kn. Film je koštao 40 kn, koliko su koštale kokice?');
 
--- 16. Površina (problemski)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Ako je površina kvadrata 49 cm², koliki je njegov opseg?',
-    '7 cm@ 14 cm@ 21 cm@ 28 cm',
-    3,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Ako je površina kvadrata 49 cm², koliki je njegov opseg?'
-    );
+SELECT 'Auto vozi 60 km/h. Koliko vremena mu treba da prijeđe 180 km?', 'x = 2@ x = 3@ x = 4@ x = 5', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Auto vozi 60 km/h. Koliko vremena mu treba da prijeđe 180 km?');
 
--- 17. Volumen (problemski)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Kolika je visina kvadra ako mu je volumen 120 cm³, duljina 10 cm i širina 3 cm?',
-    '4 cm@ 5 cm@ 6 cm@ 8 cm',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Kolika je visina kvadra ako mu je volumen 120 cm³, duljina 10 cm i širina 3 cm?'
-    );
+SELECT 'Jednadžba za obujam kvadra je: V = a²h. Ako je a = 2, h = x, a V = 16, koliko je x?', 'x = 2@ x = 4@ x = 8@ x = 1', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Jednadžba za obujam kvadra je: V = a²h. Ako je a = 2, h = x, a V = 16, koliko je x?');
 
--- 18. Pretvaranje jedinica (složeno)
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliko je 2.5 m² u cm²?',
-    '250 cm²@ 2500 cm²@ 25000 cm²@ 250000 cm²',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliko je 2.5 m² u cm²?'
-    );
+SELECT 'Ivana ima 5 godina više nego Petar. Zajedno imaju 35 godina. Koliko ima Petar?', 'x = 15@ x = 20@ x = 25@ x = 30', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Linearne jednadžbe s jednom nepoznanicom' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ivana ima 5 godina više nego Petar. Zajedno imaju 35 godina. Koliko ima Petar?');
 
--- 19. Opseg (složeni lik)
-INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je opseg lika sastavljenog od kvadrata stranice 4 cm i jednakostraničnog trokuta stranice 5 cm spojenih zajedničkom stranicom?',
-    '21 cm@ 22 cm@ 23 cm@ 24 cm',
-    0,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je opseg lika sastavljenog od kvadrata stranice 4 cm i jednakostraničnog trokuta stranice 5 cm spojenih zajedničkom stranicom?'
-    );
 
--- 20. Volumen (složeno)
+--Lekcija: Paralelogrami
+INSERT INTO public.lection (title, school_level, grade)
+SELECT 'Paralelogrami', 'Osnovna škola', '6'
+    WHERE NOT EXISTS (
+    SELECT 1 FROM public.lection
+    WHERE title = 'Paralelogrami'
+    AND school_level = 'Osnovna škola'
+    AND grade = '6'
+);
+
+-- 1. Osnovno prepoznavanje paralelograma
 INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
-SELECT
-    'Koliki je ukupni volumen dvije kocke, jedna s bridom 3 cm i druga s bridom 4 cm?',
-    '27 cm³@ 64 cm³@ 91 cm³@ 125 cm³',
-    2,
-    (SELECT lection_id FROM public.lection WHERE title = 'Geometrijski likovi i tijela' LIMIT 1)
-WHERE NOT EXISTS (
-    SELECT 1 FROM public.task
-    WHERE question_text = 'Koliki je ukupni volumen dvije kocke, jedna s bridom 3 cm i druga s bridom 4 cm?'
-    );
+SELECT 'Koji od navedenih likova je paralelogram?', 'Trokut@ Kvadrat@ Trapez@ Krug', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji od navedenih likova je paralelogram?');
+
+-- 2. Svojstva paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koja tvrdnja vrijedi za paralelogram?', 'Sve stranice su jednake@ Suprotne stranice su jednake i paralelne@ Svi kutovi su pravi@ Dijagonale su jednake', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koja tvrdnja vrijedi za paralelogram?');
+
+-- 3. Vrste paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koji od ovih likova je vrsta paralelograma?', 'Kvadrat@ Krug@ Trokut@ Trapez', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji od ovih likova je vrsta paralelograma?');
+
+-- 4. Opseg paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Ako su stranice paralelograma 6 cm i 4 cm, koliki je njegov opseg?', '10 cm@ 12 cm@ 20 cm@ 24 cm', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako su stranice paralelograma 6 cm i 4 cm, koliki je njegov opseg?');
+
+-- 5. Površina paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Kako računamo površinu paralelograma?', 'a + b@ a × b@ a × h@ a ÷ h', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kako računamo površinu paralelograma?');
+
+-- 6. Dijagonale u paralelogramu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Što vrijedi za dijagonale paralelograma?', 'Jednake su duljine@ Sijeku se pod pravim kutem@ Prepolavljaju jedna drugu@ Nemaju zajedničku točku', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Što vrijedi za dijagonale paralelograma?');
+
+-- 7. Usporedba s kvadratom
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koja je razlika između kvadrata i općeg paralelograma?', 'Kvadrat nema dijagonale@ Kvadrat ima sve kutove jednake@ Kvadrat nema suprotne stranice jednake@ Kvadrat nije paralelogram', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koja je razlika između kvadrata i općeg paralelograma?');
+
+-- 8. Primjena formule za površinu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Ako je osnovica paralelograma 10 cm, a visina 5 cm, kolika je površina?', '50 cm²@ 15 cm²@ 25 cm²@ 60 cm²', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako je osnovica paralelograma 10 cm, a visina 5 cm, kolika je površina?');
+
+-- 9. Prepoznavanje jednakokrakog paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koji od sljedećih paralelograma ima sve stranice jednake?', 'Romb@ Pravokutnik@ Trapez@ Kvadrat', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji od sljedećih paralelograma ima sve stranice jednake?');
+
+-- 10. Kutevi u paralelogramu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Ako jedan kut paralelograma ima 70°, koliki je njegov suprotni kut?', '70°@ 110°@ 90°@ 180°', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako jedan kut paralelograma ima 70°, koliki je njegov suprotni kut?');
+
+-- 11. Zbroj kutova u paralelogramu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koliki je zbroj svih kutova u paralelogramu?', '360°@ 180°@ 90°@ 720°', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koliki je zbroj svih kutova u paralelogramu?');
+
+-- 12. Primjena opsega
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Paralelogram ima stranice duljine 8 cm i 5 cm. Koliki je opseg?', '26 cm@ 13 cm@ 40 cm@ 16 cm', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Paralelogram ima stranice duljine 8 cm i 5 cm. Koliki je opseg?');
+
+-- 13. Dijagonale romba
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koje je svojstvo dijagonala u rombu?', 'Jednake su duljine@ Ne sijeku se@ Sijeku se pod pravim kutem@ Ne prepolavljaju se', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koje je svojstvo dijagonala u rombu?');
+
+-- 14. Površina kvadrata kao posebnog paralelograma
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Kvadrat je paralelogram čija je površina dana formulom:', 'a × a@ a + a@ a × h@ a² × 2', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Kvadrat je paralelogram čija je površina dana formulom:');
+
+-- 15. Visina u paralelogramu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Visina u paralelogramu je:', 'Najduža stranica@ Dijagonala@ Okomica spuštena na osnovicu@ Bilo koja stranica', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Visina u paralelogramu je:');
+
+-- 16. Kombinacija površine i opsega
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Ako paralelogram ima površinu 30 cm² i osnovicu 5 cm, kolika je visina?', '3 cm@ 6 cm@ 5 cm@ 7 cm', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Ako paralelogram ima površinu 30 cm² i osnovicu 5 cm, kolika je visina?');
+
+-- 17. Prikaz paralelograma u svakodnevnom životu
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Koji od navedenih predmeta ima oblik paralelograma?', 'Ekran mobitela@ Staklo prozora@ Romboidni znak@ Kružni sat', 2,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Koji od navedenih predmeta ima oblik paralelograma?');
+
+-- 18. Zadatak s riječima
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Paralelogram ima osnovicu 12 cm i visinu 4 cm. Kolika je njegova površina?', '48 cm²@ 16 cm²@ 24 cm²@ 60 cm²', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Paralelogram ima osnovicu 12 cm i visinu 4 cm. Kolika je njegova površina?');
+
+-- 19. Kombinirani zadatak
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Paralelogram ima opseg 40 cm, a jedna stranica je 12 cm. Kolika je druga stranica?', '8 cm@ 14 cm@ 6 cm@ 10 cm', 0,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Paralelogram ima opseg 40 cm, a jedna stranica je 12 cm. Kolika je druga stranica?');
+
+-- 20. Primjena u svakodnevici
+INSERT INTO public.task (question_text, options, correct_answer_index, lection_id)
+SELECT 'Stolnjak u obliku paralelograma ima duljinu 1,2 m i visinu 0,6 m. Kolika je njegova površina?', '1,8 m²@ 0,72 m²@ 2 m²@ 1 m²', 1,
+       (SELECT lection_id FROM public.lection WHERE title = 'Paralelogrami' LIMIT 1)
+WHERE NOT EXISTS (SELECT 1 FROM public.task WHERE question_text = 'Stolnjak u obliku paralelograma ima duljinu 1,2 m i visinu 0,6 m. Kolika je njegova površina?');
