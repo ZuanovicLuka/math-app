@@ -21,6 +21,10 @@ export default function AuthLayout({
     return pathname === path;
   };
 
+  const isLectionActive = (path: string) => {
+    return pathname.startsWith(path);
+  };
+
   const isQuizActive = (pathname: string) => {
     return (
       pathname === "/quiz" ||
@@ -57,12 +61,12 @@ export default function AuthLayout({
             <Link
               href={"/lections"}
               className={`group flex flex-col items-center gap-3 p-1 rounded-xl transition-all ${
-                isActive("/lections")
+                isLectionActive("/lections")
                   ? "bg-blue-100/80 shadow-md border border-blue-200"
                   : "hover:bg-gray-100"
               }`}
             >
-              {isActive("/lections") ? (
+              {isLectionActive("/lections") ? (
                 <>
                   <PiBooksFill size={55} className="text-blue-700" />
                   <p className="font-medium font-sans text-xl lg:text-2xl text-blue-700">
@@ -167,17 +171,17 @@ export default function AuthLayout({
         <Link
           href={"/lections"}
           className={`flex flex-col items-center justify-center rounded-lg transition-all py-2 w-24 ${
-            isActive("/lections") ? "bg-blue-200" : "hover:bg-gray-100"
+            isLectionActive("/lections") ? "bg-blue-200" : "hover:bg-gray-100"
           }`}
         >
-          {isActive("/lections") ? (
+          {isLectionActive("/lections") ? (
             <PiBooksFill size={38} className="text-blue-700" />
           ) : (
             <PiBooks size={38} className="text-gray-600" />
           )}
           <p
             className={`mt-1 font-medium font-sans ${
-              isActive("/lections") ? "text-blue-700" : "text-gray-600"
+              isLectionActive("/lections") ? "text-blue-700" : "text-gray-600"
             }`}
           >
             Lekcije
